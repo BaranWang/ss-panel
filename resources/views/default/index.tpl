@@ -1,5 +1,5 @@
-{include file='header.tpl'}
-<title>{$config["appName"]}</title>
+{extends file='layout.tpl'}
+{block name=main}
 <div class="section no-pad-bot" id="index-banner">
     <div class="container">
         <br><br>
@@ -77,4 +77,4 @@
 
     </div>
 </div>
-{include file='footer.tpl'}
+{/block}

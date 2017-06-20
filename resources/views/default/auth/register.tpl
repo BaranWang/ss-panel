@@ -1,200 +1,67 @@
-{include file='auth/header.tpl'}
-<body class="register-page">
-<div class="register-box">
-    <div class="register-logo">
-        <a href="../"><b>{$config['appName']}</b></a>
-    </div>
-
-    <div class="register-box-body">
-        <p class="login-box-msg">注册，然后变成一只猫。</p>
-
-        <div class="form-group has-feedback">
-            <input type="text" id="name" class="form-control" placeholder="昵称"/>
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
-        </div>
-
-        <div class="form-group has-feedback">
-            <input type="text" id="email" class="form-control" placeholder="邮箱"/>
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-        </div>
-
-        {if $requireEmailVerification}
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="text" id="verifycode" class="form-control" placeholder="邮箱验证码"/>
-                <span class="input-group-btn">
-                    <button type="button" id="sendcode" class="btn btn-default btn-flat">发送验证码</button>
-                </span>
-                </div>
-            </div>
-        {/if}
-
-        <div class="form-group has-feedback">
-            <input type="password" id="passwd" class="form-control" placeholder="密码"/>
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        </div>
-
-        <div class="form-group has-feedback">
-            <input type="password" id="repasswd" class="form-control" placeholder="重复密码"/>
-            <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-        </div>
-
-        <div class="form-group has-feedback">
-            <input type="text" id="code" value="{$code}" class="form-control" placeholder="邀请码"/>
-            <span class="glyphicon glyphicon-send form-control-feedback"></span>
-        </div>
-
-        <div class="form-group has-feedback">
-            <p>注册即代表同意<a href="/tos">服务条款</a></p>
-        </div>
-
-        <div class="form-group has-feedback">
-            <button type="submit" id="reg" class="btn btn-primary btn-block btn-flat">同意服务条款并提交注册</button>
-        </div>
-
-        <div id="msg-success" class="alert alert-info alert-dismissable" style="display: none;">
-            <button type="button" class="close" id="ok-close" aria-hidden="true">&times;</button>
-            <h4><i class="icon fa fa-info"></i> 成功!</h4>
-            <p id="msg-success-p"></p>
-        </div>
-
-        <div id="msg-error" class="alert alert-warning alert-dismissable" style="display: none;">
-            <button type="button" class="close" id="error-close" aria-hidden="true">&times;</button>
-            <h4><i class="icon fa fa-warning"></i> 出错了!</h4>
-            <p id="msg-error-p"></p>
-        </div>
-
-        <a href="/auth/login" class="text-center">已经注册？请登录</a>
-    </div><!-- /.form-box -->
-</div><!-- /.register-box -->
-
-<!-- jQuery 2.1.3 -->
-<script src="/assets/public/js/jquery.min.js"></script>
-<!-- Bootstrap 3.3.2 JS -->
-<script src="/assets/public/js/bootstrap.min.js" type="text/javascript"></script>
-<!-- iCheck -->
-<script src="/assets/public/js/icheck.min.js" type="text/javascript"></script>
+{extends file='layout.tpl'}
+{block name=title}注册 - {/block}
+{block name=main}
+<style>
+  md-input-container { margin: 8px 0; }
+  [ng-controller] { margin-top: 64px; }
+</style>
 <script>
-    $(function () {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-        });
-        // $("#msg-error").hide(100);
-        // $("#msg-success").hide(100);
-
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        function register() {
-            $.ajax({
-                type: "POST",
-                url: "/auth/register",
-                dataType: "json",
-                data: {
-                    email: $("#email").val(),
-                    name: $("#name").val(),
-                    passwd: $("#passwd").val(),
-                    repasswd: $("#repasswd").val(),
-                    code: $("#code").val(),
-                    verifycode: $("#verifycode").val(),
-                    agree: $("#agree").val()
-                },
-                success: function (data) {
-                    if (data.ret == 1) {
-                        $("#msg-error").hide(10);
-                        $("#msg-success").show(100);
-                        $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.href='/auth/login'", 2000);
-                    } else {
-                        $("#msg-success").hide(10);
-                        $("#msg-error").show(100);
-                        $("#msg-error-p").html(data.msg);
-                    }
-                },
-                error: function (jqXHR) {
-                    $("#msg-error").hide(10);
-                    $("#msg-error").show(100);
-                    $("#msg-error-p").html("发生错误：" + jqXHR.status);
-                }
-            });
+  myApp.controller('registerController', ['$scope', '$http', '$window', '$mdDialog', function($scope, $http, $window, $mdDialog) {
+    $scope.registerFunction = function() {
+      $http.post('/auth/register',$scope.user).then(function(res) {
+        if (res.data.ret) {
+          $http.post('/auth/login',$scope.user)
+          $window.location.href='/user'
+        }else {
+          $mdDialog.show(
+            $mdDialog.alert()
+            .clickOutsideToClose(true)
+            .textContent(res.data.msg)
+            .ok('知道了')
+          )
         }
-
-        $("html").keydown(function (event) {
-            if (event.keyCode == 13) {
-                register();
-            }
-        });
-        $("#reg").click(function () {
-            register();
-        });
-        $("#sendcode").on("click", function () {
-            var count = sessionStorage.getItem('email-code-count') || 0;
-            var email = $("#email").val();
-            var timer, countdown = 60, $btn = $(this);
-            if (count > 3 || timer) return false;
-
-            if (!email) {
-                $("#msg-error").hide(10);
-                $("#msg-error").show(100);
-                $("#msg-error-p").html("请先填写邮箱!");
-                return $("#email").focus();
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "/auth/sendcode",
-                dataType: "json",
-                data: {
-                    email: email
-                },
-                success: function (data) {
-                    if (data.ret == 1) {
-                        $("#msg-error").hide(10);
-                        $("#msg-success").show(100);
-                        $("#msg-success-p").html(data.msg);
-                        timer = setInterval(function () {
-                            --countdown;
-                            if (countdown) {
-                                $btn.text('重新发送 (' + countdown + '秒)');
-                            } else {
-                                clearTimer();
-                            }
-                        }, 1000);
-                    } else {
-                        $("#msg-success").hide(10);
-                        $("#msg-error").show(100);
-                        $("#msg-error-p").html(data.msg);
-                        clearTimer();
-                    }
-                },
-                error: function (jqXHR) {
-                    $("#msg-error").hide(10);
-                    $("#msg-error").show(100);
-                    $("#msg-error-p").html("发生错误：" + jqXHR.status);
-                    clearTimer();
-                }
-            });
-            $btn.addClass("disabled").prop("disabled", true).text('发送中...');
-            $("#verifycode").select();
-            function clearTimer() {
-                $btn.text('重新发送').removeClass("disabled").prop("disabled", false);
-                clearInterval(timer);
-                timer = null;
-            }
-        });
-        $("#ok-close").click(function () {
-            $("#msg-success").hide(100);
-        });
-        $("#error-close").click(function () {
-            $("#msg-error").hide(100);
-        });
-    })
+      })
+    }
+  }])
 </script>
-<div style="display:none;">
-    {$analyticsCode}
+<div layout="row" layout-align="center center" ng-controller="registerController">
+  <md-card flex="30" layout-padding>
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">注册 {$config["appName"]}</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+      <form layout="column" name="registerForm" ng-submit="registerFunction()">
+        <md-input-container>
+          <label>E-mail</label>
+          <md-icon class="material-icons">&#xE0BE;</md-icon>
+          <input type="email" ng-model="user.email" required>
+        </md-input-container>
+        <md-input-container>
+          <label>昵称</label>
+          <md-icon class="material-icons">&#xE853;</md-icon>
+          <input type="text" ng-model="user.name" required>
+        </md-input-container>
+        <md-input-container>
+          <label>密码</label>
+          <md-icon class="material-icons">&#xE897;</md-icon>
+          <input type="password" ng-model="user.passwd" ng-minlength="8" required>
+        </md-input-container>
+        <md-input-container>
+          <label>邀请码</label>
+          <md-icon class="material-icons">&#xE638;</md-icon>
+          <input type="text" ng-model="user.code" ng-init="user.code='{$code}'" required>
+        </md-input-container>
+        <md-input-container layout="row" layout-align="start start">
+          <md-checkbox ng-model="agree" ng-init="agree=true">我已阅读并同意</md-checkbox><a href="/tos" target="_blank">《服务条款》</a>
+        </md-input-container>
+        <md-button type="submit" class="md-raised md-primary" ng-disabled="registerForm.$invalid||!agree">立即注册</md-button>
+      </form>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="center center">
+      <md-button class="md-primary" href="/auth/login">已有账号？立即登录</md-button>
+    </md-card-actions>
+  </md-card>
 </div>
-</body>
-</html>
+{/block}

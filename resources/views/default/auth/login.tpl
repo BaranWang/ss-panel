@@ -1,5 +1,10 @@
-{include file='header.tpl'}
-<title>登录 - {$config["appName"]}</title>
+{extends file='layout.tpl'}
+{block name=title}登录 - {/block}
+{block name=main}
+<style>
+  md-input-container { margin: 8px 0; }
+  [ng-controller] { margin-top: 64px; }
+</style>
 <script>
   myApp.controller('loginController', ['$scope', '$http', '$window', function($scope, $http, $window) {
     $scope.loginFunction = function() {
@@ -10,89 +15,38 @@
   }])
 </script>
 <div layout="row" layout-align="center center" ng-controller="loginController">
-  <md-card flex="30">
+  <md-card flex="30" layout-padding>
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline">登录 {$config["appName"]}</span>
       </md-card-title-text>
     </md-card-title>
     <md-card-content>
-      <form layout="column" ng-submit="loginFunction()">
+      <form layout="column" name="loginForm" ng-submit="loginFunction()">
         <md-input-container>
           <label>E-mail</label>
-          <input ng-model="user.email">
+          <md-icon class="material-icons">&#xE0BE;</md-icon>
+          <input type="email" name="email" ng-model="user.email" required>
         </md-input-container>
         <md-input-container>
+          <md-icon class="material-icons">&#xE897;</md-icon>
           <label>密码</label>
-          <input ng-model="user.passwd">
+          <input type="password" name="passwd" ng-model="user.passwd" required>
         </md-input-container>
-        <md-input-container>
-          <md-checkbox ng-model="user.remember_me">记住我</md-checkbox>
+        <md-input-container layout="row" layout-align="center start">
+          <md-checkbox name="remember_me" ng-model="user.remember_me">记住我</md-checkbox>
+          <span flex></span>
+          <a href="/password/reset">忘记密码？</a>
         </md-input-container>
-        <md-button type="submit" class="md-raised md-primary">登录</md-button>
+        <md-button type="submit" class="md-raised md-primary" ng-disabled="loginForm.$invalid">登录</md-button>
         <md-input-container ng-if="errorMsg">
           <span class="md-input-message-animation" ng-bind="errorMsg"></span>
         </md-input-container>
       </form>
     </md-card-content>
+    <md-card-actions layout="row" layout-align="center center">
+      <md-button class="md-primary" href="/auth/register">没有账号？立即注册</md-button>
+    </md-card-actions>
   </md-card>
 </div>
-<!-- <script>
-    $(function () {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-        });
-    });
-    // $("#msg-error").hide(100);
-    // $("#msg-success").hide(100);
-</script>
-<script>
-    $(document).ready(function(){
-        function login(){
-            $.ajax({
-                type:"POST",
-                url:"/auth/login",
-                dataType:"json",
-                data:{
-                    email: $("#email").val(),
-                    passwd: $("#passwd").val(),
-                    remember_me: $("#remember_me").val()
-                },
-                success:function(data){
-                    if(data.ret == 1){
-                        $("#msg-error").hide(10);
-                        $("#msg-success").show(100);
-                        $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.href='/user'", 2000);
-                    }else{
-                        $("#msg-success").hide(10);
-                        $("#msg-error").show(100);
-                        $("#msg-error-p").html(data.msg);
-                    }
-                },
-                error:function(jqXHR){
-                    $("#msg-error").hide(10);
-                    $("#msg-error").show(100);
-                    $("#msg-error-p").html("发生错误："+jqXHR.status);
-                }
-            });
-        }
-        $("html").keydown(function(event){
-            if(event.keyCode==13){
-                login();
-            }
-        });
-        $("#login").click(function(){
-            login();
-        });
-        $("#ok-close").click(function(){
-            $("#msg-success").hide(100);
-        });
-        $("#error-close").click(function(){
-            $("#msg-error").hide(100);
-        });
-    })
-</script> -->
-{include file='footer.tpl'}
+{/block}

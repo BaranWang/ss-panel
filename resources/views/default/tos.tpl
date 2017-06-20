@@ -1,4 +1,5 @@
-{include file='header.tpl'}
+{extends file='layout.tpl'}
+{block name=main}
 <!-- Begin page content -->
 <div class="section no-pad-bot" id="index-banner">
 <div class="container">
@@ -35,4 +36,4 @@
 
 </div>
 </div>
-{include file='footer.tpl'}
+{/block}

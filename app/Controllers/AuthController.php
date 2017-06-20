@@ -94,7 +94,7 @@ class AuthController extends BaseController
         $email = $request->getParam('email');
         $email = strtolower($email);
         $passwd = $request->getParam('passwd');
-        $repasswd = $request->getParam('repasswd');
+        // $repasswd = $request->getParam('repasswd');
         $code = $request->getParam('code');
         $verifycode = $request->getParam('verifycode');
 
@@ -122,13 +122,13 @@ class AuthController extends BaseController
             return $this->echoJson($response, $res);
         }
 
-        // check pwd re
-        if ($passwd != $repasswd) {
-            $res['ret'] = 0;
-            $res['error_code'] = self::PasswordNotEqual;
-            $res['msg'] = "两次密码输入不符";
-            return $this->echoJson($response, $res);
-        }
+        // // check pwd re
+        // if ($passwd != $repasswd) {
+        //     $res['ret'] = 0;
+        //     $res['error_code'] = self::PasswordNotEqual;
+        //     $res['msg'] = "两次密码输入不符";
+        //     return $this->echoJson($response, $res);
+        // }
 
         // check email
         $user = User::where('email', $email)->first();
