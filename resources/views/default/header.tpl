@@ -8,7 +8,7 @@
     <!-- <link href="//fonts.lug.ustc.edu.cn/icon?family=Material+Icons" rel="stylesheet"> -->
     <!-- <link href="/assets/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
     <!-- <link href="/assets/materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
-    <link rel="stylesheet" href="/assets/p-ss_men/material.blue_grey-indigo.min.css">
+    <link rel="stylesheet" href="/assets/p-ss.men/css/material.blue_grey-indigo.min.css">
 </head>
 <body>
 <header class="mdl-layout__header">
