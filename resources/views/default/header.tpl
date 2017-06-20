@@ -9,7 +9,6 @@
     <!-- <link href="/assets/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
     <!-- <link href="/assets/materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
     <link rel="stylesheet" href="/assets/p-ss.men/css/material.indigo-pink.min.css">
-    <script defer src="/assets/p-ss.men/js/material.min.js"></script>
 </head>
 <body>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">

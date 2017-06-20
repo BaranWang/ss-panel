@@ -38,12 +38,9 @@
 		</div>
 	</div>
 </footer>
+</div>
 
-
-<!--  Scripts-->
-<script src="/assets/public/js/jquery.min.js"></script>
-<script src="/assets/materialize/js/materialize.min.js"></script>
-<script src="/assets/materialize/js/init.js"></script>
+<script defer src="/assets/p-ss.men/js/material.min.js"></script>
 
 </body>
 </html>
