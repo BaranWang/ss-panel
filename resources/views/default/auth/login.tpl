@@ -1,7 +1,8 @@
 {include file='header.tpl'}
 <title>登录 - {$config["appName"]}</title>
 <div layout="row" layout-align="center center">
-  <md-card>
+  <span flex="2"></span>
+  <md-card flex="1">
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline">登录 {$config["appName"]}</span>
@@ -24,6 +25,7 @@
       </form>
     </md-card-content>
   </md-card>
+  <span flex="2"></span>
 </div>
 
 <!-- <script>
