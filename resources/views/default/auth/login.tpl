@@ -30,7 +30,9 @@
           <md-checkbox ng-model="user.remember_me">记住我</md-checkbox>
         </md-input-container>
         <md-button type="submit" class="md-raised md-primary">登录</md-button>
-        <span class="md-input-message-animation" ng-if="errorMsg" ng-bind="errorMsg"></span>
+        <md-input-container ng-if="errorMsg">
+          <span class="md-input-message-animation" ng-bind="errorMsg"></span>
+        </md-input-container>
       </form>
     </md-card-content>
   </md-card>
