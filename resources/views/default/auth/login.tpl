@@ -21,16 +21,17 @@
           <md-checkbox ng-model="user.remember_me">记住我</md-checkbox>
         </md-input-container>
         <md-button type="submit" class="md-raised md-primary">登录</md-button>
+        <span class="md-input-message-animation" ng-if="errorMsg" ng-bind="errorMsg"></span>
       </form>
     </md-card-content>
   </md-card>
 </div>
 <script>
-  myApp.controller('loginController', ['$scope', '$http', function($scope, $http) {
+  myApp.controller('loginController', ['$scope', '$http', '$window' function($scope, $http, $window) {
     $scope.loginFunction = function() {
       console.log($scope.user);
       $http.post('/auth/login',$scope.user).then(function(res) {
-        console.log(res);
+        res.data.ret ? $window.location.href='/user' : $scope.errorMsg=res.data.msg
       })
     }
   }])
