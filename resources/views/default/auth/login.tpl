@@ -1,15 +1,14 @@
 {include file='header.tpl'}
 <title>登录 - {$config["appName"]}</title>
-<div layout="row" layout-align="center center">
-  <span flex="2"></span>
-  <md-card flex="1">
+<div layout="row" layout-align="center center" ng-controller="loginController">
+  <md-card flex="30">
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline">登录 {$config["appName"]}</span>
       </md-card-title-text>
     </md-card-title>
     <md-card-content>
-      <form name="userForm" method="post" layout="column">
+      <form layout="column" ng-submit="loginFunction()">
         <md-input-container>
           <label>E-mail</label>
           <input ng-model="user.email">
@@ -25,9 +24,14 @@
       </form>
     </md-card-content>
   </md-card>
-  <span flex="2"></span>
 </div>
-
+<script>
+  myApp.controller('loginController', ['$scope', function($scope) {
+    $scope.loginFunction = function() {
+      console.log($scope.user);
+    }
+  }])
+</script>
 <!-- <script>
     $(function () {
         $('input').iCheck({

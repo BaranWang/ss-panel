@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <link rel="stylesheet" href="//cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <link rel="stylesheet" href="/assets/angular/css/angular-material.min.css">
+    <script src="/assets/angular/js/angular.min.js"></script>
+    <script src="/assets/angular/js/angular-animate.min.js"></script>
+    <script src="/assets/angular/js/angular-aria.min.js"></script>
+    <script src="/assets/angular/js/angular-material.min.js"></script>
+    <script>
+    	var myApp = angular.module('myApp', ['ngMaterial']);
+    </script>
 </head>
 <body>
   <md-toolbar>
