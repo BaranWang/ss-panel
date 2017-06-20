@@ -40,7 +40,13 @@
 </footer>
 </div>
 
-<script defer src="/assets/p-ss.men/js/material.min.js"></script>
+<script src="/assets/angular/js/angular.min.js"></script>
+<script src="/assets/angular/js/angular-animate.min.js"></script>
+<script src="/assets/angular/js/angular-aria.min.js"></script>
+<script src="/assets/angular/js/angular-material.min.js"></script>
+<script>
+	angular.module('myApp', ['ngMaterial']);
+</script>
 
 </body>
 </html>

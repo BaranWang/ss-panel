@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html ng-app="myApp" lang="zh">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <title>{$config["appName"]}</title>
     <!-- CSS fonts.googleapis.com -->
     <link rel="stylesheet" href="//cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">
-    <!-- <link href="/assets/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
-    <!-- <link href="/assets/materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
-    <link rel="stylesheet" href="/assets/p-ss.men/css/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="/assets/angular/css/angular-material.min.css">
 </head>
 <body>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
