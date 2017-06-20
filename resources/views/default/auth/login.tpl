@@ -26,9 +26,12 @@
   </md-card>
 </div>
 <script>
-  myApp.controller('loginController', ['$scope', function($scope) {
+  myApp.controller('loginController', ['$scope', '$http', function($scope, $http) {
     $scope.loginFunction = function() {
       console.log($scope.user);
+      $http.post('/auth/login',$scope.user).then(function(res) {
+        console.log(res);
+      })
     }
   }])
 </script>
