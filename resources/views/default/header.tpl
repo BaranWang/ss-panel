@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
     <title>{$config["appName"]}</title>
     <!-- CSS fonts.googleapis.com -->
-    <link href="//cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <!-- <link href="/assets/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
     <!-- <link href="/assets/materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
-    <link rel="stylesheet" href="/assets/p-ss.men/css/material.blue_grey-indigo.min.css">
+    <link rel="stylesheet" href="/assets/p-ss.men/css/material.indigo-pink.min.css">
+    <script defer src="/assets/p-ss.men/js/material.min.js"></script>
 </head>
 <body>
 <header class="mdl-layout__header">
