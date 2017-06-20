@@ -3,8 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-    <title>{$config["appName"]}</title>
-    <!-- CSS fonts.googleapis.com -->
     <link rel="stylesheet" href="//cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <link rel="stylesheet" href="/assets/angular/css/angular-material.min.css">
 </head>
@@ -22,8 +20,7 @@
       <md-button ng-href="/user">用户中心</md-button>
       <md-button ng-href="/user/logout">退出</md-button>
       {else}
-      <md-button ng-href="/auth/login">登录</md-button>
-      <md-button ng-href="/auth/register">注册</md-button>
+      <md-button ng-href="/auth/login">登录/注册</md-button>
       {/if}
     </div>
   </md-toolbar>
