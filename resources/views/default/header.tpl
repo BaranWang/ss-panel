@@ -16,16 +16,14 @@
         {$config["appName"]}
       </h1>
       <span flex></span>
-      <md-nav-bar>
-        <md-nav-item md-nav-href="/">首页</md-nav-item>
-        <md-nav-item md-nav-href="/code">邀请码</md-nav-item>
-        {if $user->isLogin}
-        <md-nav-item md-nav-href="/user">用户中心</md-nav-item>
-        <md-nav-item md-nav-href="/user/logout">退出</md-nav-item>
-        {else}
-        <md-nav-item md-nav-href="/auth/login">登录</md-nav-item>
-        <md-nav-item md-nav-href="/auth/register">注册</md-nav-item>
-        {/if}
-      </md-nav-bar>
+      <md-button ng-href="/">首页</md-button>
+      <md-button ng-href="/code">邀请码</md-button>
+      {if $user->isLogin}
+      <md-button ng-href="/user">用户中心</md-button>
+      <md-button ng-href="/user/logout">退出</md-button>
+      {else}
+      <md-button ng-href="/auth/login">登录</md-button>
+      <md-button ng-href="/auth/register">注册</md-button>
+      {/if}
     </div>
   </md-toolbar>
