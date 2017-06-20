@@ -12,7 +12,7 @@
     <script defer src="/assets/p-ss.men/js/material.min.js"></script>
 </head>
 <body>
-<header class="mdl-layout__header">
+<header class="mdl-layout__header mdl-layout__header--waterfall">
   <div class="mdl-layout__header-row">
     <span class="mdl-layout-title">
       <i class="material-icons">&#xE163;</i>
