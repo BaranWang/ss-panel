@@ -7,8 +7,8 @@
         <span class="md-headline">登录 {$config["appName"]}</span>
       </md-card-title-text>
     </md-card-title>
-    <md-card-content layout="column">
-      <form name="userForm" method="post">
+    <md-card-content>
+      <form name="userForm" method="post" layout="column">
         <md-input-container>
           <label>E-mail</label>
           <input ng-model="user.email">
