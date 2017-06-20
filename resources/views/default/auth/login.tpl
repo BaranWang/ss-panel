@@ -4,10 +4,10 @@
   <md-card>
     <md-card-title>
       <md-card-title-text>
-        <span class="md-headline">登录 $config["appName"]}</span>
+        <span class="md-headline">登录 {$config["appName"]}</span>
       </md-card-title-text>
     </md-card-title>
-    <md-card-content>
+    <md-card-content layout="column">
       <form name="userForm" method="post">
         <md-input-container>
           <label>E-mail</label>
@@ -20,6 +20,7 @@
         <md-input-container>
           <md-checkbox ng-model="user.remember_me">记住我</md-checkbox>
         </md-input-container>
+        <md-button type="submit" class="md-raised md-primary">登录</md-button>
       </form>
     </md-card-content>
   </md-card>
