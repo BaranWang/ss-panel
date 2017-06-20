@@ -5,13 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
     <title>{$config["appName"]}</title>
     <!-- CSS fonts.googleapis.com -->
-    <link href="//fonts.lug.ustc.edu.cn/icon?family=Material+Icons" rel="stylesheet">
-    <link href="/assets/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="/assets/materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- <link href="//fonts.lug.ustc.edu.cn/icon?family=Material+Icons" rel="stylesheet"> -->
+    <!-- <link href="/assets/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
+    <!-- <link href="/assets/materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
+    <link rel="stylesheet" href="/assets/p-ss.men/material.blue_grey-indigo.min.css">
 </head>
 <body>
+<header class="mdl-layout__header">
+  <div class="mdl-layout__header-row">
+    <span class="mdl-layout-title">{$config["appName"]}</span>
+    <nav class="mdl-navigation">
+      <a href="/">首页</a>
+      <a href="/code">邀请码</a>
+    </nav>
+    <div class="mdl-layout-spacer"></div>
+    <nav class="mdl-navigation">
+      {if $user->isLogin}
+      <a href="/user">用户中心</a>
+      <a href="/user/logout">退出</a>
+      {else}
+      <a href="/auth/login">登录</a>
+      <a href="/auth/register">注册</a>
+      {/if}
+    </nav>
+  </div>
+</header>
 <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">{$config["appName"]}</a>
+    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"></a>
         <ul class="right hide-on-med-and-down">
             <li><a href="/">首页</a></li>
             <li><a href="https://shadowsocks.org/en/download/clients.html">客户端下载</a></li>
