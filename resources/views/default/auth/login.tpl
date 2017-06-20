@@ -1,5 +1,14 @@
 {include file='header.tpl'}
 <title>登录 - {$config["appName"]}</title>
+<script>
+  myApp.controller('loginController', ['$scope', '$http', '$window', function($scope, $http, $window) {
+    $scope.loginFunction = function() {
+      $http.post('/auth/login',$scope.user).then(function(res) {
+        res.data.ret ? $window.location.href='/user' : $scope.errorMsg=res.data.msg
+      })
+    }
+  }])
+</script>
 <div layout="row" layout-align="center center" ng-controller="loginController">
   <md-card flex="30">
     <md-card-title>
@@ -26,16 +35,6 @@
     </md-card-content>
   </md-card>
 </div>
-<script>
-  myApp.controller('loginController', ['$scope', '$http', '$window' function($scope, $http, $window) {
-    $scope.loginFunction = function() {
-      console.log($scope.user);
-      $http.post('/auth/login',$scope.user).then(function(res) {
-        res.data.ret ? $window.location.href='/user' : $scope.errorMsg=res.data.msg
-      })
-    }
-  }])
-</script>
 <!-- <script>
     $(function () {
         $('input').iCheck({
