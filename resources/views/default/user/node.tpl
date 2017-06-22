@@ -1,5 +1,5 @@
-{include file='user/main.tpl'}
-
+{extends file='user/layout.tpl'}
+{block name=main}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -90,5 +90,4 @@
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-
-{include file='user/footer.tpl'}
+{/block}

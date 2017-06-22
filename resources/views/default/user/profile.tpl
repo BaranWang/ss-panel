@@ -1,5 +1,5 @@
-{include file='user/main.tpl'}
-
+{extends file='user/layout.tpl'}
+{block name=main}
 <div class="content-wrapper">
     <section class="content-header">
         <h1>
@@ -38,4 +38,4 @@
     </section>
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
-{include file='user/footer.tpl'}
+{/block}

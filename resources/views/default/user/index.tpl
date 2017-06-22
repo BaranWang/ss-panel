@@ -1,13 +1,53 @@
-{include file='user/main.tpl'}
+{extends file='user/layout.tpl'}
+{block name=main}
+<h2 class="md-headline">用户中心 <span class="md-subhead">User Center</span></h2>
+<div layout-xs="column" layout="row">
+  <div flex-xs flex-gt-xs="50" layout="column">
+    <md-card>
+      <md-card-title>
+        <md-card-title-text class="md-headline">公告</md-card-title-text>
+      </md-card-title>
+      <md-card-content>{$msg}</md-card-content>
+    </md-card>
+  </div>
+  <div flex-xs flex-gt-xs="50" layout="column">
+    <md-card>
+      <md-card-title>
+        <md-card-title-text layout="row" layout-align="space-between end">
+          <span class="md-headline">流量</span>
+          <span class="md-body-1">剩余 {$user->unusedTraffic()} （共 {$user->enableTraffic()}）</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <md-progress-linear class="traffic-progress" md-mode="determinate" value="{$user->trafficUsagePercent()}"></md-progress-linear>
+        <p class="md-caption">
+          <span md-colors="{ color:'primary' }">&#9608;</span> 已用
+          <span md-colors="{ color:'primary-100' }">&#9608;</span> 剩余
+        </p>
+        {* <svg fill="none" viewbox="0 0 40 40">
+          <g transform="rotate(270 20,20)">
+            <circle stroke="#eee" cx="20" cy="20" r="16" stroke-width="8"></circle>
+            <circle md-colors="{ stroke:'primary' }" cx="20" cy="20" r="16" stroke-width="8" stroke-dasharray="0 100">
+              <animate attributeName="stroke-dasharray" from="0 100" to="{$user->trafficUsagePercent()} 100" dur=".5s" repeatCount="1" fill="freeze"/>
+            </circle>
+          </g>
+        </svg> *}
+      </md-card-content>
+    </md-card>
+    <md-card>
+      <md-card-title>
+        <md-card-title-text class="md-headline">公告</md-card-title-text>
+      </md-card-title>
+      <md-card-content>{$msg}</md-card-content>
+    </md-card>
+  </div>
+</div>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>
-            用户中心
-            <small>User Center</small>
-        </h1>
+
     </section>
 
     <!-- Main content -->
@@ -23,7 +63,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        {$msg}
+
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -124,7 +164,7 @@
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-<script>
+{* <script>
     $(document).ready(function () {
         $("#checkin").click(function () {
             $.ajax({
@@ -144,4 +184,5 @@
 </script>
 
 
-{include file='user/footer.tpl'}
+{include file='user/footer.tpl'}*}
+{/block}

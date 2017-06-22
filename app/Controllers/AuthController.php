@@ -157,7 +157,7 @@ class AuthController extends BaseController
 
         // do reg user
         $user = new User();
-        $user->user_name = $name;
+        $user->user_name = $name ? $name : $email;
         $user->email = $email;
         $user->pass = Hash::passwordHash($passwd);
         $user->passwd = Tools::genRandomChar(6);

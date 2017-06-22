@@ -1,4 +1,5 @@
-{include file='user/main.tpl'}
+{extends file='user/layout.tpl'}
+{block name=main}
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -116,9 +117,9 @@
                                     <div class="input-group">
                                         <select class="form-control" id="method">
                                         {foreach $method as $cipher}
-                                           <option value="{$cipher}" {if $user->method==$cipher}selected="selected"{/if} >{$cipher}</option>  
+                                           <option value="{$cipher}" {if $user->method==$cipher}selected="selected"{/if} >{$cipher}</option>
                                         {/foreach}
-                                        </select>  
+                                        </select>
                                         <div class="input-group-btn">
                                             <button type="submit" id="method-update" class="btn btn-primary">修改</button>
                                         </div>
@@ -232,4 +233,4 @@
 </script>
 
 
-{include file='user/footer.tpl'}
+{/block}

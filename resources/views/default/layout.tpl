@@ -1,39 +1,96 @@
 <!DOCTYPE html>
-<html ng-app="myApp" lang="zh">
+<html ng-app="MyApp" ng-controller="MyController" lang="zh">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-    <title>{block name=title}{/block}{$config["appName"]}</title>
-    <link rel="stylesheet" href="//cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">
-    <link rel="stylesheet" href="/assets/angular/css/angular-material.min.css">
-    <script src="/assets/angular/js/angular.min.js"></script>
-    <script src="/assets/angular/js/angular-animate.min.js"></script>
-    <script src="/assets/angular/js/angular-aria.min.js"></script>
-    <script src="/assets/angular/js/angular-material.min.js"></script>
-    <script>
-    	var myApp = angular.module('myApp', ['ngMaterial']);
-    </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>{block name=title}{/block}{$config["appName"]}</title>
+  <link rel="stylesheet" href="//cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+  <link rel="stylesheet" href="/assets/p-ss.men/css/angular-material.min.css">
+  <link rel="stylesheet" href="/assets/p-ss.men/css/style.css">
+  <script src="/assets/p-ss.men/js/angular.min.js"></script>
+  <script src="/assets/p-ss.men/js/angular-animate.min.js"></script>
+  <script src="/assets/p-ss.men/js/angular-aria.min.js"></script>
+  <script src="/assets/p-ss.men/js/angular-material.min.js"></script>
+  <script>
+    var MyApp = angular.module('MyApp', ['ngMaterial']);
+    MyApp.config(function($mdThemingProvider) {
+      $mdThemingProvider.theme('default')
+        .primaryPalette('blue-grey')
+        .accentPalette('blue');
+    });
+    MyApp.controller('MyController', function($scope, $mdSidenav) {
+      $scope.openSideMenu = function() {
+        $mdSidenav('left').toggle();
+      };
+    });
+  </script>
 </head>
-<body>
+
+<body layout="column" flex>
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <h1>
-        <md-icon class="material-icons">&#xE163;</md-icon>
-        {$config["appName"]}
-      </h1>
+      {if $sidenav}
+      <md-button class="md-icon-button" hide-gt-sm ng-click="openSideMenu()">
+        <md-icon class="material-icons">&#xE5D2;</md-icon>
+      </md-button>
+      {/if}
+      <md-icon id="logo" md-svg-icon="/assets/p-ss.men/img/logo.svg" aria-label="{$config['appName']}"></md-icon>
       {* <md-button href="/">首页</md-button>
+      <md-button href="//shadowsocks.org/en/download/clients.html" target="_blank">客户端下载</md-button>
       <md-button href="/code">邀请码</md-button> *}
       <span flex></span>
       {if $user->isLogin}
-      <md-button href="/user">用户中心</md-button>
-      <md-button href="/user/logout">退出</md-button>
+      <md-menu>
+        <md-button class="user_ctrl" ng-click="$mdOpenMenu($event)">
+          <img ng-src="{$user->gravatar}" alt="{$user->user_name}" class="md-avatar">
+        </md-button>
+        <md-menu-content width="5" flex>
+          <md-list>
+            <md-list-item class="md-2-line">
+              <img ng-src="{$user->gravatar}" alt="{$user->user_name}" class="md-avatar">
+              <div class="md-list-item-text">
+                <h3>{$user->user_name}</h3>
+                <p>{$user->email}</p>
+              </div>
+            </md-list-item>
+          </md-list>
+          <md-menu-item>
+            <md-button href="/user">用户中心</md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button href="/user/logout">退出</md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
       {else}
       <md-button href="/auth/login">登录 / 注册</md-button>
       {/if}
     </div>
   </md-toolbar>
-  {* {$smarty.server.REQUEST_URI} *}
-  {block name=main}{/block}
+  <div layout="row" flex>
+    {if $sidenav}
+    <md-sidenav class="site-sidenav md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="4" flex>
+      <md-content flex>
+        {foreach $sidenav as $name => $url}
+        <md-menu-item>
+          <md-button {if $smarty.server.REQUEST_URI==$url}class="md-primary"{/if} href="{$url}">{$name}</md-button>
+        </md-menu-item>
+        {/foreach}
+      </md-content>
+    </md-sidenav>
+    {/if}
+    <md-content md-scroll-y layout="column" flex>
+      <div layout-padding flex="noshrink">
+        {block name=main}{/block}
+      </div>
+      <footer layout="row" flex="noshrink" layout-align="center center">
+        Copyright &copy; {date("Y")} <a href="{$config['baseUrl']}">{$config['appName']}</a>
+        Powered by <a href="https://github.com/orvice/ss-panel">ss-panel</a> {$config['version']}
+      </footer>
+    </md-content>
+  </div>
   {$analyticsCode}
 </body>
+
 </html>

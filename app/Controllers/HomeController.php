@@ -23,6 +23,7 @@ class HomeController extends BaseController
 
     public function index()
     {
+      // echo json_encode($this->smarty());exit;
         $homeIndexMsg = DbConfig::get('home-index');
         return $this->view()->assign('homeIndexMsg', $homeIndexMsg)->display('index.tpl');
     }
@@ -58,8 +59,8 @@ class HomeController extends BaseController
     public function postDebug(Request $request,Response $response, $args)
     {
         $res = [
-            "body" => $request->getBody(), 
-            "params" => $request->getParams() 
+            "body" => $request->getBody(),
+            "params" => $request->getParams()
         ];
         return $this->echoJson($response, $res);
     }

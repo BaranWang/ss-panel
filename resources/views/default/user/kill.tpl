@@ -1,4 +1,5 @@
-{include file='user/main.tpl'}
+{extends file='user/layout.tpl'}
+{block name=main}
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -100,4 +101,4 @@
     })
 </script>
 
-{include file='user/footer.tpl'}
+{/block}

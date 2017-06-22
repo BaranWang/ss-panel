@@ -1,4 +1,5 @@
-{include file='user/main.tpl'}
+{extends file='user/layout.tpl'}
+{block name=main}
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -30,7 +31,7 @@
                         {foreach $nodes as $node}
                             <option value="{$node->id}" {if $node->id==$seleNode}selected="selected"{/if}>
                                 {$node->name}
-                            </option>  
+                            </option>
                         {/foreach}
                         </select>
                     </div>
@@ -74,4 +75,4 @@
     })
 </script>
 
-{include file='user/footer.tpl'}
+{/block}
