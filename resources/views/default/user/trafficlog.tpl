@@ -1,15 +1,11 @@
 {extends file='user/layout.tpl'}
 {block name=main}
 <script>
-  MyApp.controller('ViewController', function($scope, $location, $window) {
+  MyApp.controller('ViewController', function($scope, $window) {
     $scope.goto = function(url) {
-      console.log(url,'-1-');
-      console.log($location.host(),'-2-');
-      console.log($location.absUrl(),'-3-');
-      console.log($location.absUrl().split($location.host())[1]);
-      // if (url != $location.absUrl().split($location.host())[1]) {
-      //   $window.location.href = url
-      // }
+      if (url != $window.location.search) {
+        $window.location.href = url
+      }
     };
   });
 </script>
@@ -52,7 +48,7 @@
   <span>第</span>
   <md-input-container>
     <md-select ng-model="page" ng-change="goto(page)">
-      <md-option value="{$smarty.server.REDIRECT_URL}?page={literal}{{i}}{/literal}" ng-repeat="i in {$page.array} track by $index" ng-bind="i" ng-selected="{$page.current_page}==i"></md-option>
+      <md-option value="?page={literal}{{i}}{/literal}" ng-repeat="i in {$page.array} track by $index" ng-bind="i" ng-selected="{$page.current_page}==i"></md-option>
     </md-select>
   </md-input-container>
   <span>页</span>
