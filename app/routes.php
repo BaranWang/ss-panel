@@ -147,8 +147,7 @@ $app->group('/mu/v2', function () {
 // res
 $app->group('/res', function () {
     $this->get('/captcha/{id}', 'App\Controllers\ResController:captcha');
+    $this->get('/qrcode', 'App\Controllers\ResController:qrcode');
 });
 
 return $app;
-
-

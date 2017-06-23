@@ -2,13 +2,13 @@
 {block name=title}注册 - {/block}
 {block name=main}
 <script>
-  MyApp.controller('RegisterController', function($scope, $http, $window, $mdDialog) {
+  MyApp.controller('ViewController', function($scope, $http, $window, $mdDialog) {
     $scope.registerFunction = function() {
       $http.post('/auth/register',$scope.user).then(function(res) {
         if (res.data.ret) {
           $http.post('/auth/login',$scope.user)
           $window.location.href='/user'
-        }else {
+        } else {
           $mdDialog.show(
             $mdDialog.alert()
             .clickOutsideToClose(true)
@@ -20,7 +20,7 @@
     }
   })
 </script>
-<div class="card-page" layout="row" layout-align="center center" ng-controller="RegisterController">
+<div class="card-page" layout="row" layout-align="center center">
   <md-card layout-padding>
     <md-card-title>
       <md-card-title-text>

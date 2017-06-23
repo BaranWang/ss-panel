@@ -2,7 +2,7 @@
 {block name=title}登录 - {/block}
 {block name=main}
 <script>
-  MyApp.controller('LoginController', function($scope, $http, $window) {
+  MyApp.controller('ViewController', function($scope, $http, $window) {
     $scope.loginFunction = function() {
       $http.post('/auth/login',$scope.user).then(function(res) {
         res.data.ret ? $window.location.href='/user' : $scope.errorMsg=res.data.msg
@@ -10,7 +10,7 @@
     }
   })
 </script>
-<div class="card-page" layout="row" layout-align="center center" ng-controller="LoginController">
+<div class="card-page" layout="row" layout-align="center center">
   <md-card layout-padding>
     <md-card-title>
       <md-card-title-text>

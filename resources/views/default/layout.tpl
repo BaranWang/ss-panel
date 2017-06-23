@@ -14,16 +14,18 @@
   <script src="/assets/p-ss.men/js/angular-material.min.js"></script>
   <script>
     var MyApp = angular.module('MyApp', ['ngMaterial']);
-    MyApp.config(function($mdThemingProvider) {
+    MyApp.config(function($mdThemingProvider,$mdAriaProvider) {
       $mdThemingProvider.theme('default')
-        .primaryPalette('blue-grey')
-        .accentPalette('blue');
+        .primaryPalette('pink')
+        .dark();
+      $mdAriaProvider.disableWarnings();
     });
     MyApp.controller('MyController', function($scope, $mdSidenav) {
       $scope.openSideMenu = function() {
         $mdSidenav('left').toggle();
       };
     });
+    MyApp.controller('ViewController', function() {});
   </script>
 </head>
 
@@ -81,13 +83,17 @@
     </md-sidenav>
     {/if}
     <md-content md-scroll-y layout="column" flex>
-      <div layout-padding flex="noshrink">
+      <div layout-padding flex="noshrink" ng-controller="ViewController">
         {block name=main}{/block}
       </div>
-      <footer layout="row" flex="noshrink" layout-align="center center">
-        Copyright &copy; {date("Y")} <a href="{$config['baseUrl']}">{$config['appName']}</a>
-        Powered by <a href="https://github.com/orvice/ss-panel">ss-panel</a> {$config['version']}
-      </footer>
+      <div layout="row" flex="noshrink" layout-padding layout-align="center end">
+        <footer id="license-footer" class="md-caption" layout-padding flex>
+          <p>
+            Copyright &copy; {date("Y")} <a class="md-primary" href="{$config['baseUrl']}">{$config['appName']}</a>
+            Powered by <a class="md-primary" href="https://github.com/orvice/ss-panel" title="ss-panel v{$config['version']}">ss-panel</a>
+          </p>
+        </footer>
+      </div>
     </md-content>
   </div>
   {$analyticsCode}

@@ -9,6 +9,15 @@ body {
   height: 24px;
   margin-right: 32px;
 }
+#license-footer {
+  border-top: 1px solid rgba(#fff,.2);
+}
+
+.page-title {
+  h2 {
+    margin-bottom: 0;
+  }
+}
 
 .user_ctrl {
   &,
@@ -38,15 +47,23 @@ body {
   //   min-width: 160px;
   // }
 }
+.md-subheader {
+  &.tips {
+    .md-subheader-inner {
+      padding: 4px 8px;
+    }
+  }
+}
 .card-page {
   margin-top: 16px;
   & > md-card {
     width: 100%;
     max-width: 400px;
   }
-  md-input-container {
-    margin: 8px 0;
-  }
+}
+
+md-input-container {
+  margin: 8px 0;
 }
 
 .traffic-progress {

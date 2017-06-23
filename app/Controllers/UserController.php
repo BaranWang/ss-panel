@@ -133,13 +133,13 @@ class UserController extends BaseController
         }
         if ($pwd != $repwd) {
             $res['ret'] = 0;
-            $res['msg'] = "两次输入不符合";
+            $res['msg'] = "两次输入密码不一致";
             return $response->getBody()->write(json_encode($res));
         }
 
         if (strlen($pwd) < 8) {
             $res['ret'] = 0;
-            $res['msg'] = "密码太短啦";
+            $res['msg'] = "密码长度过短";
             return $response->getBody()->write(json_encode($res));
         }
         $hashPwd = Hash::passwordHash($pwd);
@@ -147,7 +147,7 @@ class UserController extends BaseController
         $user->save();
 
         $res['ret'] = 1;
-        $res['msg'] = "ok";
+        $res['msg'] = "修改成功";
         return $this->echoJson($response, $res);
     }
 
@@ -175,6 +175,7 @@ class UserController extends BaseController
         $method = strtolower($method);
         $user->updateMethod($method);
         $res['ret'] = 1;
+        $res['msg'] = "修改成功";
         return $this->echoJson($response, $res);
     }
 
@@ -236,6 +237,7 @@ class UserController extends BaseController
 
     public function trafficLog($request, $response, $args)
     {
+      // var_dump($_SERVER);exit;
         $pageNum = 1;
         if (isset($request->getQueryParams()["page"])) {
             $pageNum = $request->getQueryParams()["page"];
@@ -244,11 +246,17 @@ class UserController extends BaseController
             $node = $args['nid'];
             $traffic = TrafficLog::where('user_id', $this->user->id)->where('node_id', $node)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
             $traffic->setPath("/user/trafficlog/$node");
-            return $this->view()->assign('logs', $traffic)->assign('seleNode', $node)->assign('nodes', Node::all())->display('user/trafficlog.tpl');
         } else {
+            $node = -1;
             $traffic = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
             $traffic->setPath('/user/trafficlog');
-            return $this->view()->assign('logs', $traffic)->assign('seleNode', -1)->assign('nodes', Node::all())->display('user/trafficlog.tpl');
         }
+        $page = array_intersect_key((array)json_decode(json_encode($traffic)), array_flip(array('current_page', 'last_page', 'prev_page_url', 'next_page_url')));
+        if ($page['last_page'] > 1) {
+          $page['array'] = json_encode(range(1,$page['last_page']));
+        } else {
+          $page['array'] = '[]';
+        }
+        return $this->view()->assign('logs', $traffic)->assign('page', $page)->assign('seleNode', $node)->assign('nodes', Node::all())->display('user/trafficlog.tpl');
     }
 }

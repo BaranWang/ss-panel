@@ -1,78 +1,58 @@
 {extends file='user/layout.tpl'}
 {block name=main}
-
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            流量使用记录
-            <small>Traffic Log</small>
-        </h1>
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="callout callout-warning">
-                    <h4>注意!</h4>
-                    <p>部分节点不支持流量记录.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box form-inline">
-                     <div class="form-group">
-                        <label for="labelNode">节点</label>
-                        <select id="search-node">
-                            <option value="0">所有节点</option>
-                        {foreach $nodes as $node}
-                            <option value="{$node->id}" {if $node->id==$seleNode}selected="selected"{/if}>
-                                {$node->name}
-                            </option>
-                        {/foreach}
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="log-search">搜索</button>
-                </div>
-                <div class="box">
-                    <div class="box-body table-responsive no-padding">
-                        {$logs->render()}
-                        <table class="table table-hover">
-                            <tr>
-                                <th>ID</th>
-                                <th>使用节点</th>
-                                <th>倍率</th>
-                                <th>实际使用流量</th>
-                                <th>结算流量</th>
-                                <th>记录时间</th>
-                            </tr>
-                            {foreach $logs as $log}
-                                <tr>
-                                    <td>#{$log->id}</td>
-                                    <td>{$log->node()->name}</td>
-                                    <td>{$log->rate}</td>
-                                    <td>{$log->totalUsed()}</td>
-                                    <td>{$log->traffic}</td>
-                                    <td>{$log->logTime()}</td>
-                                </tr>
-                            {/foreach}
-                        </table>
-                        {$logs->render()}
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div>
-        </div>
-    </section><!-- /.content -->
-</div><!-- /.content-wrapper -->
 <script>
-    $(document).ready(function () {
-        $("#log-search").click(function () {
-            window.setTimeout("location.href='/user/trafficlog/"+$("#search-node").val()+"'", 500);
-        })
-    })
+  MyApp.controller('ViewController', function($scope, $location, $window) {
+    $scope.goto = function(url) {
+      if (url != $location.absUrl().split($location.host())[1]) {
+        $window.location.href = url
+      }
+    };
+  });
 </script>
+<div class="page-title" layout-padding>
+  <h2 class="md-headline">流量使用记录 <span class="md-subhead">Traffic Log</span></h2>
+</div>
+<div layout="row" layout-align="start center" layout-padding>
+  <md-input-container>
+    <md-select ng-model="nodeId">
+      <md-option value="-1" {if $seleNode=='-1'}selected{/if}>所有节点</md-option>
+      {foreach $nodes as $node}
+      <md-option value="{$node->id}" {if $node->id==$seleNode}selected{/if}>{$node->name}</md-option>
+      {/foreach}
+    </md-select>
+  </md-input-container>
+  <md-input-container>
+    <md-button class="md-raised md-primary" ng-href="/user/trafficlog{literal}{{ nodeId > 0 ? '/' + nodeId : '' }}{/literal}?page=1">搜索</md-button>
+  </md-input-container>
+</div>
+<md-list>
+  <md-list-item>
+    <span flex="15">ID</span>
+    <span flex="15">使用节点</span>
+    <span flex="30">使用流量</span>
+    <span flex="40">记录时间</span>
+  </md-list-item>
+  {foreach $logs as $log}
+  <md-list-item>
+    <span flex="15">#{$log->id}</span>
+    <span flex="15">{$log->node()->name}</span>
+    <span flex="30">{$log->traffic}</span>
+    <span flex="40">{$log->logTime()|date_format:"%m-%d %T"}</span>
+  </md-list-item>
+  {/foreach}
+</md-list>
 
+{if $page.last_page > 1}
+<div layout="row" layout-align="start center">
+  <md-button class="md-icon-button md-raised" ng-href="{$page.prev_page_url}" ng-disabled="{$page.current_page}==1"><md-icon class="material-icons">&#xE408;</md-icon></md-button>
+  <span>第</span>
+  <md-input-container>
+    <md-select ng-model="page" ng-change="goto(page)">
+      <md-option value="{$smarty.server.REDIRECT_URL}?page={literal}{{i}}{/literal}" ng-repeat="i in {$page.array} track by $index" ng-bind="i" ng-selected="{$page.current_page}==i"></md-option>
+    </md-select>
+  </md-input-container>
+  <span>页</span>
+  <md-button class="md-icon-button md-raised" ng-href="{$page.next_page_url}" ng-disabled="{$page.current_page}=={$page.last_page}"><md-icon class="material-icons">&#xE409;</md-icon></md-button>
+</div>
+{/if}
 {/block}
