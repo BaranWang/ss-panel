@@ -5,9 +5,9 @@
   MyApp.controller('ViewController', function($scope, $http) {
     $http.post('').then(function(res) {
       var chart = new G2.Chart({
-        id: 'c1',
+        id: 'chart',
         forceFit: true,
-        height: 450
+        height: 480
       });
       chart.source(res.data, {
         'log_time': {
@@ -41,7 +41,7 @@
 <div class="page-title" layout-padding>
   <h2 class="md-headline">流量使用记录 <span class="md-subhead">Traffic Log</span></h2>
 </div>
-<div id="c1"></div>
+<div id="chart"></div>
 
 
 {/block}
