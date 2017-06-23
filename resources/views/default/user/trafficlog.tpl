@@ -3,7 +3,9 @@
 <script>
   MyApp.controller('ViewController', function($scope, $location, $window) {
     $scope.goto = function(url) {
-      console.log(url);
+      console.log(url,'-1-');
+      console.log($location.host(),'-2-');
+      console.log($location.absUrl(),'-3-');
       console.log($location.absUrl().split($location.host())[1]);
       // if (url != $location.absUrl().split($location.host())[1]) {
       //   $window.location.href = url
