@@ -3,9 +3,11 @@
 <script>
   MyApp.controller('ViewController', function($scope, $location, $window) {
     $scope.goto = function(url) {
-      if (url != $location.absUrl().split($location.host())[1]) {
-        $window.location.href = url
-      }
+      console.log(url);
+      console.log($location.absUrl().split($location.host())[1]);
+      // if (url != $location.absUrl().split($location.host())[1]) {
+      //   $window.location.href = url
+      // }
     };
   });
 </script>
