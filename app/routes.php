@@ -66,7 +66,7 @@ $app->group('/auth', function () {
     $this->post('/login', 'App\Controllers\AuthController:loginHandle');
     $this->get('/register', 'App\Controllers\AuthController:register');
     $this->post('/register', 'App\Controllers\AuthController:registerHandle');
-    $this->post('/sendcode', 'App\Controllers\AuthController:sendVerifyEmail');
+    $this->get('/sendcode', 'App\Controllers\AuthController:sendVerifyEmail');
     $this->get('/logout', 'App\Controllers\AuthController:logout');
 })->add(new Guest());
 
@@ -149,6 +149,7 @@ $app->group('/mu/v2', function () {
 $app->group('/res', function () {
     $this->get('/captcha/{id}', 'App\Controllers\ResController:captcha');
     $this->get('/qrcode', 'App\Controllers\ResController:qrcode');
+    $this->get('/logo', 'App\Controllers\ResController:logo');
 });
 
 return $app;

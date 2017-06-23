@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use Gregwar\Captcha\CaptchaBuilder;
 use Endroid\QrCode\QrCode;
+use DOMDocument;
 
 class ResController
 {
@@ -30,5 +31,17 @@ class ResController
         $newResponse = $response->withHeader('Content-type', $qrCode->getContentType());
         $newResponse->getBody()->write($qrCode->writeString());
         return $newResponse;
+    }
+    public function logo($request, $response, $args){
+      $color = $request->getParam('color');
+      $svg = DOMDocument::loadXML(file_get_contents(BASE_PATH . '/public/assets/p-ss.men/img/logo.svg'));
+      if ($color) {
+        foreach ($svg->getElementsByTagName('svg') as $foobar) {
+          $foobar->setAttribute('fill', $color);
+        }
+      }
+      $newResponse = $response->withHeader('Content-type', 'image/svg+xml');
+      $newResponse->getBody()->write($svg->saveXML());
+      return $newResponse;
     }
 }

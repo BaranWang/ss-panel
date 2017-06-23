@@ -38,7 +38,7 @@
         <md-icon class="material-icons">&#xE5D2;</md-icon>
       </md-button>
       {/if}
-      <md-icon id="logo" md-svg-icon="/assets/p-ss.men/img/logo.svg" aria-label="{$config['appName']}"></md-icon>
+      <md-icon id="logo" md-svg-icon="/index.php/res/logo" aria-label="{$config['appName']}"></md-icon>
       {* <md-button href="/">首页</md-button>
       <md-button href="//shadowsocks.org/en/download/clients.html" target="_blank">客户端下载</md-button>
       <md-button href="/code">邀请码</md-button> *}

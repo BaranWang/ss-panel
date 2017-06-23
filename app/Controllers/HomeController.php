@@ -23,8 +23,7 @@ class HomeController extends BaseController
 
     public function index()
     {
-      header("Location: /user");
-      exit();
+      header("Location: /user");exit;
       // echo json_encode($this->smarty());exit;
         $homeIndexMsg = DbConfig::get('home-index');
         return $this->view()->assign('homeIndexMsg', $homeIndexMsg)->display('index.tpl');

@@ -1,12 +1,40 @@
+<style>
+  .body {
+    width: 100%;
+    padding: 24px 0 16px 0;
+    background-color: #f5f5f5;
+    text-align: center;
+  }
 
-<div class="body" style="background-color: #f5f5f5; padding: 24px 0 16px 0; text-align: center; width: 100%;">
-  <div class="wrap" style="display: inline-block; font-family: sans-serif; max-width: 680px; min-width: 280px; text-align: left; width: 90%;">
+  .wrap {
+    display: inline-block;
+    width: 90%;
+    max-width: 680px;
+    min-width: 280px;
+    text-align: left;
+    font-family: sans-serif;
+  }
+
+  .card-wrap {
+    border: 1px solid #f0f0f0;
+    border-width: 0 1px;
+  }
+
+  .card-wrap-content {
+    padding: 24px 32px;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-width: 0 1px;
+  }
+</style>
+<div class="body">
+  <div class="wrap">
     <img src="{$config['baseUrl']}/res/logo?color=white" alt="{$config['appName']}">
     <div style="display:block;padding:0 2px">
       <div style="display:block;background:#fff;height:2px"></div>
     </div>
-    <div class="card-wrap" style="border: 1px solid #f0f0f0; border-width: 0 1px;">
-      <div class="card-wrap-content" style="background: #fff; border: 1px solid #eaeaea; border-width: 0 1px; padding: 24px 32px;">
+    <div class="card-wrap">
+      <div class="card-wrap-content">
         <p>你的邮箱验证码为 <b style="background-color:#eee">{$verification->token}</b>，验证码 {$ttl} 分钟内有效。</p>
       </div>
     </div>

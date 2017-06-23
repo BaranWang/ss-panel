@@ -3,6 +3,7 @@
 namespace App\Services\Mail;
 
 use App\Services\Config;
+use App\Services\DbConfig;
 use Mailgun\Mailgun as MailgunService;
 
 class Mailgun extends Base
@@ -37,9 +38,13 @@ class Mailgun extends Base
      */
     public function send($to, $subject, $text, $file)
     {
+        $appName = DbConfig::get('app-name');
+        if ($appName == null || $appName == "") {
+            $appName = Config::get("appName");
+        }
         $this->mg->sendMessage($this->domain,
             [
-                'from' => $this->sender,
+                'from' => "$appName <{$this->sender}>",
                 'to' => $to,
                 'subject' => $subject,
                 'html' => $text

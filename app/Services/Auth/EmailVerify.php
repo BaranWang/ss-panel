@@ -28,7 +28,7 @@ class EmailVerify
         }
         $appName = Config::get('appName');
         $subject = $appName . ' 邮箱验证';
-       
+
         try {
             Mail::send($email, $subject,'auth/verify.tpl',[
                 'verification' => $verification,
