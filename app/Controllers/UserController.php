@@ -234,29 +234,18 @@ class UserController extends BaseController
         $res['msg'] = "GG!您的帐号已经从我们的系统中删除.";
         return $this->echoJson($response, $res);
     }
-
-    public function trafficLog($request, $response, $args)
+    public function trafficLog($request, $response)
     {
-      // var_dump($_SERVER);exit;
-        $pageNum = 1;
-        if (isset($request->getQueryParams()["page"])) {
-            $pageNum = $request->getQueryParams()["page"];
-        }
-        if (isset($args['nid']) && isset($args['nid']) > 0) {
-            $node = $args['nid'];
-            $traffic = TrafficLog::where('user_id', $this->user->id)->where('node_id', $node)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
-            $traffic->setPath("/user/trafficlog/$node");
-        } else {
-            $node = -1;
-            $traffic = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
-            $traffic->setPath('/user/trafficlog');
-        }
-        $page = array_intersect_key((array)json_decode(json_encode($traffic)), array_flip(array('current_page', 'last_page', 'prev_page_url', 'next_page_url')));
-        if ($page['last_page'] > 1) {
-          $page['array'] = json_encode(range(1,$page['last_page']));
-        } else {
-          $page['array'] = '[]';
-        }
-        return $this->view()->assign('logs', $traffic)->assign('page', $page)->assign('seleNode', $node)->assign('nodes', Node::all())->display('user/trafficlog.tpl');
+        return $this->view()->display('user/trafficlog.tpl');
+    }
+    public function trafficLogJson($request, $response, $args)
+    {
+      $traffic = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->get();
+      foreach ($traffic as $key => $value) {
+        $traffic[$key]['log_time'] = $traffic[$key]['log_time'] * 1000;
+        $traffic[$key]['traffic'] = ($traffic[$key]['d'] + $traffic[$key]['u']) * $traffic[$key]['rate'];
+        $traffic[$key]['node'] = Node::find($traffic[$key]['node_id'])['name'];
+      }
+      return json_encode($traffic);exit;
     }
 }

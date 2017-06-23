@@ -16,8 +16,8 @@
     var MyApp = angular.module('MyApp', ['ngMaterial']);
     MyApp.config(function($mdThemingProvider,$mdAriaProvider) {
       $mdThemingProvider.theme('default')
-        .primaryPalette('pink')
-        .dark();
+        {*.primaryPalette('pink')
+        .dark();*}
       $mdAriaProvider.disableWarnings();
     });
     MyApp.controller('MyController', function($scope, $mdSidenav) {
