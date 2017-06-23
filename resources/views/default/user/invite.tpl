@@ -1,122 +1,43 @@
 {extends file='user/layout.tpl'}
+{block name=jslink}
+<script src="//cdn.bootcss.com/clipboard.js/1.7.1/clipboard.min.js"></script>
+<script src="//cdn.bootcss.com/ngclipboard/1.1.1/ngclipboard.min.js"></script>
+{/block}
+{block name=ng}'ngclipboard'{/block}
 {block name=main}
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            邀请
-            <small>Invite</small>
-        </h1>
-    </section>
-
-    <!-- Main content --><!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="msg-error" class="alert alert-warning alert-dismissable" style="display:none">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-warning"></i> 出错了!</h4>
-
-                    <p id="msg-error-p"></p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-6">
-                <!-- general form elements -->
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <i class="fa fa-rocket"></i>
-
-                        <h3 class="box-title">邀请</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <p>当前您可以生成<code>{$user->invite_num}</code>个邀请码。 </p>
-                        {if $user->invite_num }
-                        <div class="input-group">
-                            <input class="form-control" id="num" type="number" placeholder="要生成的邀请码数量">
-                            <div class="input-group-btn">
-                                <button id="invite" class="btn btn-info">生成我的邀请码</button>
-                            </div>
-                        </div>
-                        {/if}
-                    </div>
-                    <!-- /.box -->
-                    <div class="box-header">
-                        <h3 class="box-title">我的邀请码</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>###</th>
-                                <th>邀请码(点右键复制链接)</th>
-                                <th>状态</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {foreach $codes as $code}
-                                <tr>
-                                    <td><b>{$code->id}</b></td>
-                                    <td><a href="/auth/register?code={$code->code}" target="_blank">{$code->code}</a>
-                                    </td>
-                                    <td>可用</td>
-                                </tr>
-                            {/foreach}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="callout callout-warning">
-                    <h4>注意！</h4>
-
-                    <p>邀请码请给认识的需要的人。</p>
-
-                    <p>邀请有记录，若被邀请的人违反用户协议，您将会有连带责任。</p>
-                </div>
-
-                <div class="callout callout-info">
-                    <h4>说明</h4>
-
-                    <p>用户注册48小时后，才可以生成邀请码。</p>
-
-                    <p>邀请码暂时无法购买，请珍惜。</p>
-
-                    <p>公共页面不定期发放邀请码，如果用完邀请码可以关注公共邀请。</p>
-                </div>
-            </div>
-            <!-- /.col (right) -->
-        </div>
-    </section>
-    <!-- /.content -->
-</div><!-- /.content-wrapper -->
-
 <script>
-    $(document).ready(function () {
-        $("#invite").click(function () {
-            $.ajax({
-                type: "POST",
-                url: "/user/invite",
-                dataType: "json",
-                data: {
-                    num: $("#num").val()
-                },
-                success: function (data) {
-                    window.location.reload();
-                },
-                error: function (jqXHR) {
-                    alert("发生错误：" + jqXHR.status);
-                }
-            })
-        })
-    })
+  MyApp.controller('ViewController', function($scope, $http, $window) {
+    $scope.getCode = function() {
+      $http.post('/user/invite', { num: 1 }).then(function() {
+        $window.location.reload()
+      })
+    }
+  })
 </script>
-
+<div class="page-title" layout-padding>
+  <h2 class="md-headline">邀请好友 <span class="md-subhead">Invite</span></h2>
+</div>
+<md-content layout-xs="column" layout="row">
+  <div flex-xs flex-gt-xs="50" layout="column">
+    <md-card>
+      <md-card-title>
+        <md-card-title-text class="md-headline">获取邀请码</md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <p>当前你还可以获取 {$user->invite_num} 个邀请码</p>
+        {if $user->invite_num}
+        <md-button class="md-raised md-primary" ng-click="getCode()" ng-disabled="webpwdForm.$invalid">获取我的邀请码</md-button>
+        {/if}
+        {foreach $codes as $code}
+        <md-list-item class="secondary-button-padding">
+          <p>{$code->code}（可用）</p>
+          <md-button class="md-secondary md-icon-button" ngclipboard data-clipboard-text="{$config['baseUrl']}/auth/register?code={$code->code}">
+            <md-icon class="material-icons">&#xE14D;</md-icon>
+          </md-button>
+        </md-list-item>
+        {/foreach}
+      </md-card-content>
+    </md-card>
+  </div>
+</md-content>
 {/block}

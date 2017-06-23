@@ -12,8 +12,9 @@
   <script src="/assets/p-ss.men/js/angular-animate.min.js"></script>
   <script src="/assets/p-ss.men/js/angular-aria.min.js"></script>
   <script src="/assets/p-ss.men/js/angular-material.min.js"></script>
+  {block name=jslink}{/block}
   <script>
-    var MyApp = angular.module('MyApp', ['ngMaterial']);
+    var MyApp = angular.module('MyApp', ['ngMaterial',{block name=ng}{/block}]);
     MyApp.config(function($mdThemingProvider,$mdAriaProvider) {
       $mdThemingProvider.theme('default')
         {*.primaryPalette('pink')

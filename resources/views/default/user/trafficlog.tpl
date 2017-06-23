@@ -7,7 +7,7 @@
       var chart = new G2.Chart({
         id: 'chart',
         forceFit: true,
-        height: 480
+        height: 480,
       });
       chart.source(res.data, {
         'log_time': {
