@@ -13,7 +13,7 @@
         'log_time': {
           type: 'time',
           alias: '时间',
-          mask: 'yy/m/dd H:mm:ss',
+          mask: 'mm/dd HH:MM:ss',
         },
         'node': {
           alias: '节点',
