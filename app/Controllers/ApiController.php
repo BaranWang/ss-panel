@@ -94,5 +94,19 @@ class ApiController extends BaseController
         return $this->echoJson($response,$res);
 
     }
+    public function reCAPTCHA($request, $response, $args){
+      $curl = curl_init();
+
+      curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query(array(
+        'secret' => '6LcJyCYUAAAAAMfYPlB2_QbNwA-UF_i60fnZrOq3',
+        'response' => $request->getParam('g-recaptcha-response')
+      )));
+      $res = curl_exec($curl);
+      curl_close($curl);
+
+      return $res;
+    }
 
 }

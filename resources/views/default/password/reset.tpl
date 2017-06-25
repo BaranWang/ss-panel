@@ -1,3 +1,56 @@
+{extends file='layout.tpl'}
+{block name=title}重置密码 - {/block}
+{block name=jslink}
+<script src="//www.google.com/recaptcha/api.js"></script>
+{/block}
+{block name=main}
+<script>
+  // @flow
+  function getRecaptchaResponse() {
+    var $scope = angular.element(document.querySelector('[ng-controller="ViewController"]')).scope()
+    $scope.$apply(function() {
+      $scope.grecaptchaResponse = grecaptcha.getResponse()
+    })
+  }
+  MyApp.controller('ViewController', function($scope, $http, $window) {
+    // grecaptcha.getResponse();
+    $scope.resetFunction = function() {
+      console.log();
+    }
+
+  })
+</script>
+<div class="card-page" layout="row" layout-align="center center">
+  <md-card layout-padding>
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">登录 {$config["appName"]}</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+      <form layout="column" name="resetForm" ng-submit="resetFunction()">
+        <md-input-container>
+          <label>E-mail</label>
+          <md-icon class="material-icons">&#xE0BE;</md-icon>
+          <input type="email" name="email" ng-model="email.email" required>
+        </md-input-container>
+        <md-button type="submit" class="md-raised md-primary g-recaptcha"
+        data-sitekey="6LcJyCYUAAAAAF9cJ2OoC_sLAHDRxuARgAaiR4Bx"
+        data-callback="getRecaptchaResponse"
+        ng-disabled="resetForm.$invalid">重置密码</md-button>
+        <md-input-container ng-if="errorMsg">
+          <span class="md-input-message-animation" ng-bind="errorMsg"></span>
+        </md-input-container>
+      </form>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="center center">
+      <a class="md-primary" href="/auth/register">没有账号？立即注册</a>
+    </md-card-actions>
+  </md-card>
+</div>
+
+
+
 
 <body class="login-page">
 <div class="login-box">
@@ -98,5 +151,4 @@
         });
     })
 </script>
-</body>
-</html>
+{/block}

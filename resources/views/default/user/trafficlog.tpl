@@ -1,7 +1,9 @@
 {extends file='user/layout.tpl'}
+{block name=title}流量统计 - {/block}
 {block name=main}
 <script src="//a.alipayobjects.com/g/datavis/g2/2.3.5/g2.js"></script>
 <script>
+// @flow
   MyApp.controller('ViewController', function($scope, $http) {
     $http.post('').then(function(res) {
       var chart = new G2.Chart({
@@ -39,7 +41,7 @@
   });
 </script>
 <div class="page-title" layout-padding>
-  <h2 class="md-headline">流量使用记录 <span class="md-subhead">Traffic Log</span></h2>
+  <h2 class="md-headline">流量统计 <span class="md-subhead">Traffic Log</span></h2>
 </div>
 <div id="chart"></div>
 

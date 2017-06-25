@@ -125,6 +125,7 @@ $app->group('/api', function () {
     $this->post('/token', 'App\Controllers\ApiController:newToken');
     $this->get('/node', 'App\Controllers\ApiController:node')->add(new Api());
     $this->get('/user/{id}', 'App\Controllers\ApiController:userInfo')->add(new Api());
+    $this->get('/reCAPTCHA', 'App\Controllers\ApiController:reCAPTCHA');
 });
 
 // mu
@@ -149,7 +150,6 @@ $app->group('/mu/v2', function () {
 $app->group('/res', function () {
     $this->get('/captcha/{id}', 'App\Controllers\ResController:captcha');
     $this->get('/qrcode', 'App\Controllers\ResController:qrcode');
-    $this->get('/logo', 'App\Controllers\ResController:logo');
 });
 
 return $app;

@@ -6,12 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>{block name=title}{/block}{$config["appName"]}</title>
   <link rel="stylesheet" href="//cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">
-  <link rel="stylesheet" href="/assets/p-ss.men/css/angular-material.min.css">
+  <link rel="stylesheet" href="//cdn.bootcss.com/angular-material/1.1.4/angular-material.min.css">
   <link rel="stylesheet" href="/assets/p-ss.men/css/style.css">
-  <script src="/assets/p-ss.men/js/angular.min.js"></script>
-  <script src="/assets/p-ss.men/js/angular-animate.min.js"></script>
-  <script src="/assets/p-ss.men/js/angular-aria.min.js"></script>
-  <script src="/assets/p-ss.men/js/angular-material.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.6.4/angular.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.6.4/angular-animate.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.6.4/angular-aria.min.js"></script>
+  <script src="//cdn.bootcss.com/angular-material/1.1.4/angular-material.min.js"></script>
   {block name=jslink}{/block}
   <script>
     var MyApp = angular.module('MyApp', ['ngMaterial',{block name=ng}{/block}]);
