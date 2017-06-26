@@ -6,6 +6,7 @@ use App\Models\InviteCode;
 use App\Models\Node,App\Models\User;
 use App\Services\Factory;
 use App\Services\Config;
+use App\Services\PayOrder;
 use App\Utils\Tools,App\Utils\Hash,App\Utils\Helper;
 use Omnipay\Omnipay;
 /**
@@ -130,16 +131,17 @@ class ApiController extends BaseController
       $gateway = $this->intAliPay();
       $request = $gateway->completePurchase();
       $request->setParams($_POST); //Optional
-      try {
-        $response = $request->send();
-        if($response->isPaid()){
-          die('success'); //The response should be 'success' only
-        }else{
-          die('fail');
-        }
-      } catch (Exception $e) {
-          die('fail');
-      }
+      PayOrder::addOrder(1,$request->send());
+      // try {
+      //   $response = $request->send();
+      //   if($response->isPaid()){
+      //     die('success'); //The response should be 'success' only
+      //   }else{
+      //     die('fail');
+      //   }
+      // } catch (Exception $e) {
+      //     die('fail');
+      // }
     }
     private function intAliPay(){
       $gateway = Omnipay::create('Alipay_AopF2F');
