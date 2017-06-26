@@ -123,9 +123,10 @@ class ApiController extends BaseController
         'total_amount' => $money
       ]);
       $response = $request->send();
+      var_dump($response);exit;
       return json_encode($response->getAlipayResponse());
     }
-    public function alipayStatus($request, $response, $args){
+    public function alipayCallback($request, $response, $args){
       $gateway = $this->intAliPay();
       $request = $gateway->completePurchase();
       $request->setParams($_POST); //Optional
