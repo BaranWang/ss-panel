@@ -10,7 +10,7 @@ class PayOrder
 {
     public static function addOrder($userId,$data)
     {
-      $payOrder = new PayOrder();
+      $payOrder = new PayOrderModels();
       $payOrder->user_id = $userId;
       $payOrder->data = $data;
       if (!$pwdRst->save()) {

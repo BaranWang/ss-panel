@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class PayOrder extends Model
+class PayOrderModels extends Model
 {
     protected $table = "pay_order";
 }
