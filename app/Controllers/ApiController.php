@@ -116,6 +116,7 @@ class ApiController extends BaseController
     public function alipay($request, $response, $args){
       $money = $request->getParam('money');
       $gateway = $this->intAliPay();
+      var_dump($gateway);exit;
       $request = $gateway->purchase();
       $request->setBizContent([
         'subject'      => Config::get('appName').' 充值',
