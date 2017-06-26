@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a01690a20fa7149135da0abbec555f40",
+    "content-hash": "8cfa9f80fef864486f06ad7276158a18",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1058,6 +1058,59 @@
             "time": "2017-01-13T09:11:46+00:00"
         },
         {
+            "name": "lokielse/omnipay-alipay",
+            "version": "v2.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lokielse/omnipay-alipay.git",
+                "reference": "36e4ba0c5bee2d92bde96f55d5bce532ee17f25b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lokielse/omnipay-alipay/zipball/36e4ba0c5bee2d92bde96f55d5bce532ee17f25b",
+                "reference": "36e4ba0c5bee2d92bde96f55d5bce532ee17f25b",
+                "shasum": ""
+            },
+            "require": {
+                "omnipay/common": "~2.0"
+            },
+            "require-dev": {
+                "omnipay/tests": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\Alipay\\": "src/",
+                    "Omnipay\\Alipay\\Tests\\": "tests/"
+                },
+                "files": [
+                    "src/Common/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Loki Else",
+                    "email": "lokielse@gmail.com"
+                }
+            ],
+            "description": "Alipay gateway for Omnipay payment processing library",
+            "homepage": "https://github.com/lokielse/omnipay-alipay",
+            "keywords": [
+                "alipay",
+                "gateway",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment",
+                "purchase"
+            ],
+            "time": "2017-05-10T08:19:53+00:00"
+        },
+        {
             "name": "mailgun/mailgun-php",
             "version": "v1.7.2",
             "source": {
@@ -1363,6 +1416,104 @@
                 "routing"
             ],
             "time": "2016-04-18T11:33:20+00:00"
+        },
+        {
+            "name": "omnipay/common",
+            "version": "2.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/omnipay-common.git",
+                "reference": "54910f2ece6b1be64f5e53e2111dd1254d50ee49"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-common/zipball/54910f2ece6b1be64f5e53e2111dd1254d50ee49",
+                "reference": "54910f2ece6b1be64f5e53e2111dd1254d50ee49",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/guzzle": "~3.9",
+                "php": ">=5.3.2",
+                "symfony/http-foundation": "~2.1|~3.0"
+            },
+            "require-dev": {
+                "omnipay/tests": "~2.0",
+                "squizlabs/php_codesniffer": "~1.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5.x-dev"
+                },
+                "gateways": [
+                    "AuthorizeNet_AIM",
+                    "AuthorizeNet_SIM",
+                    "Buckaroo_CreditCard",
+                    "Buckaroo_Ideal",
+                    "Buckaroo_PayPal",
+                    "CardSave",
+                    "Coinbase",
+                    "Dummy",
+                    "Eway_Rapid",
+                    "FirstData_Connect",
+                    "GoCardless",
+                    "Manual",
+                    "Migs_ThreeParty",
+                    "Migs_TwoParty",
+                    "Mollie",
+                    "MultiSafepay",
+                    "Netaxept",
+                    "NetBanx",
+                    "PayFast",
+                    "Payflow_Pro",
+                    "PaymentExpress_PxPay",
+                    "PaymentExpress_PxPost",
+                    "PayPal_Express",
+                    "PayPal_Pro",
+                    "Pin",
+                    "SagePay_Direct",
+                    "SagePay_Server",
+                    "SecurePay_DirectPost",
+                    "Stripe",
+                    "TargetPay_Directebanking",
+                    "TargetPay_Ideal",
+                    "TargetPay_Mrcash",
+                    "WorldPay"
+                ]
+            },
+            "autoload": {
+                "psr-0": {
+                    "Omnipay\\Common\\": "src/"
+                },
+                "classmap": [
+                    "src/Omnipay/Omnipay.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adrian Macneil",
+                    "email": "adrian@adrianmacneil.com"
+                },
+                {
+                    "name": "Omnipay Contributors",
+                    "homepage": "https://github.com/thephpleague/omnipay-common/contributors"
+                }
+            ],
+            "description": "Common components for Omnipay payment processing library",
+            "homepage": "https://github.com/thephpleague/omnipay-common",
+            "keywords": [
+                "gateway",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment",
+                "purchase"
+            ],
+            "time": "2016-11-07T06:10:23+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2051,16 +2202,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.6",
+            "version": "v2.8.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "a158f13992a3147d466af7a23b564ac719a4ddd8"
+                "reference": "1377400fd641d7d1935981546aaef780ecd5bf6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/a158f13992a3147d466af7a23b564ac719a4ddd8",
-                "reference": "a158f13992a3147d466af7a23b564ac719a4ddd8",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/1377400fd641d7d1935981546aaef780ecd5bf6d",
+                "reference": "1377400fd641d7d1935981546aaef780ecd5bf6d",
                 "shasum": ""
             },
             "require": {
@@ -2068,7 +2219,7 @@
             },
             "require-dev": {
                 "psr/log": "~1.0",
-                "symfony/config": "~2.0,>=2.0.5|~3.0.0",
+                "symfony/config": "^2.0.5|~3.0.0",
                 "symfony/dependency-injection": "~2.6|~3.0.0",
                 "symfony/expression-language": "~2.6|~3.0.0",
                 "symfony/stopwatch": "~2.3|~3.0.0"
@@ -2107,7 +2258,60 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-05-03T18:59:18+00:00"
+            "time": "2017-06-02T07:47:27+00:00"
+        },
+        {
+            "name": "symfony/http-foundation",
+            "version": "v3.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-foundation.git",
+                "reference": "80eb5a1f968448b77da9e8b2c0827f6e8d767846"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/80eb5a1f968448b77da9e8b2c0827f6e8d767846",
+                "reference": "80eb5a1f968448b77da9e8b2c0827f6e8d767846",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "symfony/polyfill-mbstring": "~1.1"
+            },
+            "require-dev": {
+                "symfony/expression-language": "~2.8|~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\HttpFoundation\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony HttpFoundation Component",
+            "homepage": "https://symfony.com",
+            "time": "2017-06-05T13:06:51+00:00"
         },
         {
             "name": "symfony/inflector",
@@ -3734,6 +3938,7 @@
             "keywords": [
                 "git"
             ],
+            "abandoned": true,
             "time": "2016-02-21T15:02:23+00:00"
         },
         {
