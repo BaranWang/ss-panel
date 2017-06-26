@@ -146,7 +146,7 @@ class ApiController extends BaseController
       $gateway->setAppId(Config::get('alipay_sandbox') ? Config::get('alipay_sandbox_appId') : Config::get('alipay_appId'));
       $gateway->setPrivateKey(Config::get('alipay_privateKey'));
       $gateway->setAlipayPublicKey(Config::get('alipay_publicKey'));
-      $gateway->setNotifyUrl(Config::get('alipay_notifyUrl'));
+      $gateway->setNotifyUrl(Config::get('baseUrl').'/api/alipay/callback');
       if (Config::get('alipay_sandbox')) {
         $gateway->sandbox();
       }
