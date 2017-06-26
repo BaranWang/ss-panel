@@ -125,7 +125,9 @@ $app->group('/api', function () {
     $this->post('/token', 'App\Controllers\ApiController:newToken');
     $this->get('/node', 'App\Controllers\ApiController:node')->add(new Api());
     $this->get('/user/{id}', 'App\Controllers\ApiController:userInfo')->add(new Api());
-    $this->get('/reCAPTCHA', 'App\Controllers\ApiController:reCAPTCHA');
+    $this->post('/reCAPTCHA', 'App\Controllers\ApiController:reCAPTCHA');
+    $this->get('/pay/alipay', 'App\Controllers\ApiController:alipay');
+    $this->get('/pay/alipay/status', 'App\Controllers\ApiController:alipayStatus');
 });
 
 // mu

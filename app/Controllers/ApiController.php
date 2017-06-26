@@ -5,7 +5,9 @@ namespace App\Controllers;
 use App\Models\InviteCode;
 use App\Models\Node,App\Models\User;
 use App\Services\Factory;
+use App\Services\Config;
 use App\Utils\Tools,App\Utils\Hash,App\Utils\Helper;
+use Omnipay\Omnipay;
 /**
  *  ApiController
  */
@@ -99,14 +101,56 @@ class ApiController extends BaseController
 
       curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query(array(
-        'secret' => '6LcJyCYUAAAAAMfYPlB2_QbNwA-UF_i60fnZrOq3',
+
+      // curl_setopt($curl, CURLOPT_PROXY, 'http://127.0.0.1:8123'); // 上线注释
+      curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, "10");
+      curl_setopt($curl, CURLOPT_TIMEOUT, "10");
+      curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query([
+        'secret'   => '6LcJyCYUAAAAAMfYPlB2_QbNwA-UF_i60fnZrOq3',
         'response' => $request->getParam('g-recaptcha-response')
-      )));
+        ]));
       $res = curl_exec($curl);
       curl_close($curl);
-
       return $res;
+    }
+    public function alipay($request, $response, $args){
+      $money = $request->getParam('money');
+      $gateway = $this->intAliPay();
+      $request = $gateway->purchase();
+      $request->setBizContent([
+        'subject'      => Config::get('appName').' 充值',
+        'out_trade_no' => date('YmdHis') . mt_rand(1000, 9999),
+        'total_amount' => $money
+      ]);
+      $response = $request->send();
+      return json_encode($response->getAlipayResponse());
+    }
+    public function alipayStatus($request, $response, $args){
+      $gateway = $this->intAliPay();
+      $request = $gateway->completePurchase();
+      $request->setParams($_POST); //Optional
+      try {
+        $response = $request->send();
+        if($response->isPaid()){
+          die('success'); //The response should be 'success' only
+        }else{
+          die('fail');
+        }
+      } catch (Exception $e) {
+          die('fail');
+      }
+    }
+    private function intAliPay(){
+      $gateway = Omnipay::create('Alipay_AopF2F');
+      $gateway->setSignType(Config::get('alipay_setSignType'));
+      $gateway->setAppId(Config::get('alipay_sandbox') ? Config::get('alipay_sandbox_appId') : Config::get('alipay_appId'));
+      $gateway->setPrivateKey(Config::get('alipay_privateKey'));
+      $gateway->setAlipayPublicKey(Config::get('alipay_publicKey'));
+      $gateway->setNotifyUrl(Config::get('alipay_notifyUrl'));
+      if (Config::get('alipay_sandbox')) {
+        $gateway->sandbox();
+      }
+      return $gateway;
     }
 
 }

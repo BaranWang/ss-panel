@@ -32,7 +32,7 @@
         <md-input-container>
           <label>E-mail</label>
           <md-icon class="material-icons">&#xE0BE;</md-icon>
-          <input type="email" ng-model="user.email" required>
+          <input type="email" ng-model="user.email" ng-init="user.email='{$email}'" required>
         </md-input-container>
         <md-input-container>
           <label>昵称</label>

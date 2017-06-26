@@ -84,8 +84,12 @@ class AuthController extends BaseController
         if (isset($ary['code'])) {
             $code = Tools::checkHtml($ary['code']);
         }
+        $email = "";
+        if (isset($ary['email'])) {
+            $email = Tools::checkHtml($ary['email']);
+        }
         $requireEmailVerification = Config::get('emailVerifyEnabled');
-        return $this->view()->assign('code', $code)->assign('requireEmailVerification', $requireEmailVerification)->display('auth/register.tpl');
+        return $this->view()->assign('code', $code)->assign('email', $email)->assign('requireEmailVerification', $requireEmailVerification)->display('auth/register.tpl');
     }
 
     public function registerHandle($request, $response, $args)

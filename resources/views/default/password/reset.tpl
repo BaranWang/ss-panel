@@ -7,17 +7,29 @@
 <script>
   // @flow
   function getRecaptchaResponse() {
-    var $scope = angular.element(document.querySelector('[ng-controller="ViewController"]')).scope()
-    $scope.$apply(function() {
-      $scope.grecaptchaResponse = grecaptcha.getResponse()
-    })
+    angular.element(document.querySelector('[ng-controller="ViewController"]'))
+    .scope()
+    .resetFunction(grecaptcha.getResponse());
   }
-  MyApp.controller('ViewController', function($scope, $http, $window) {
-    // grecaptcha.getResponse();
-    $scope.resetFunction = function() {
-      console.log();
+  MyApp.controller('ViewController', function($scope, $http, $window, $mdDialog) {
+    $scope.resetFunction = function(grecaptchaResponse) {
+      $http.post('/api/reCAPTCHA', {
+        'g-recaptcha-response': grecaptchaResponse
+      }).then(function(res) {
+        if (res.data.success) {
+          $http.post('/password/reset',$scope.email).then(function(res) {
+            $mdDialog.show(
+              $mdDialog.alert()
+              .clickOutsideToClose(true)
+              .textContent(res.data.msg)
+              .ok('知道了')
+            ).then(function() {
+              $window.location.href = res.data.ret ? '/auth/login' : '/auth/register?email=' + $scope.email.email
+            })
+          })
+        }
+      })
     }
-
   })
 </script>
 <div class="card-page" layout="row" layout-align="center center">
@@ -28,7 +40,7 @@
       </md-card-title-text>
     </md-card-title>
     <md-card-content>
-      <form layout="column" name="resetForm" ng-submit="resetFunction()">
+      <form layout="column" name="resetForm" ng-submit="resetFunction('')">
         <md-input-container>
           <label>E-mail</label>
           <md-icon class="material-icons">&#xE0BE;</md-icon>
@@ -51,7 +63,7 @@
 
 
 
-
+{*
 <body class="login-page">
 <div class="login-box">
     <div class="login-logo">
@@ -150,5 +162,5 @@
             $("#msg-error").hide(100);
         });
     })
-</script>
+</script> *}
 {/block}

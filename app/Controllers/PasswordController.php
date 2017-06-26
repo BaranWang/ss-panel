@@ -28,12 +28,12 @@ class PasswordController extends BaseController
         $user = User::where('email', $email)->first();
         if ($user == null) {
             $rs['ret'] = 0;
-            $rs['msg'] = '此邮箱不存在.';
+            $rs['msg'] = '改邮箱尚未注册';
             return $response->getBody()->write(json_encode($rs));
         }
         Password::sendResetEmail($email);
         $rs['ret'] = 1;
-        $rs['msg'] = '重置邮件已经发送,请检查邮箱.';
+        $rs['msg'] = '重置邮件已发送至你的邮箱，请注意查收';
         return $response->getBody()->write(json_encode($rs));
     }
 
