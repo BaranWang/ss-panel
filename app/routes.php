@@ -127,7 +127,7 @@ $app->group('/api', function () {
     $this->get('/user/{id}', 'App\Controllers\ApiController:userInfo')->add(new Api());
     $this->post('/reCAPTCHA', 'App\Controllers\ApiController:reCAPTCHA');
     $this->get('/pay/alipay', 'App\Controllers\ApiController:alipay');
-    $this->post('/pay/alipay/callback', 'App\Controllers\ApiController:alipayCallback');
+    $this->get('/pay/alipay/callback', 'App\Controllers\ApiController:alipayCallback');
 });
 
 // mu
