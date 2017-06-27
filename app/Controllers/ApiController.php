@@ -130,7 +130,7 @@ class ApiController extends BaseController
     public function alipayCallback($request, $response, $args){
       // PayOrder::add(1, $request->setParams($_POST));
       // $callback = json_decode(file_get_contents('php://input'));
-      PayOrder::add(1,$_POST);
+      PayOrder::add(1,json_encode($_POST));
       // PayOrder::add(1, json_encode([
       //   'trade_status' => $callback['trade_status'],
       //   'out_trade_no' => $callback['out_trade_no'],
