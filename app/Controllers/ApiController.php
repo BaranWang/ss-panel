@@ -128,12 +128,19 @@ class ApiController extends BaseController
       return json_encode($response->getAlipayResponse());
     }
     public function alipayCallback($request, $response, $args){
-      // $gateway = $this->intAliPay();
-      // $request = $gateway->completePurchase();
-      // $request->setParams($_POST); //Optional
-      // var_dump($request->getParsedBody());exit;
-      // PayOrder::add(1, json_encode($_POST));
-      var_dump(file_get_contents('php://input'));exit;
+      // PayOrder::add(1, $request->setParams($_POST));
+      $callback = json_decode(file_get_contents('php://input'));
+      PayOrder::add(1, json_encode([
+        'trade_status' => $callback['trade_status'],
+        'out_trade_no' => $callback['out_trade_no'],
+        'buyer_logon_id' => $callback['buyer_logon_id'],
+        'total_amount' => $callback['total_amount'],
+        'receipt_amount' => $callback['receipt_amount'],
+        'body' => $callback['body'],
+        ]));
+
+      var_dump($callback);
+      echo $callback['trade_status'];
       // try {
       //   $response = $request->send();
       //   if($response->isPaid()){
