@@ -22,7 +22,7 @@ class PayOrder
     }
     public static function update($orderId, $data)
     {
-      $payOrder = PasswordReset::where('order_id', $orderId)->first();
+      $payOrder = PayOrderModel::where('order_id', $orderId)->first();
 
       $payOrder->data = $data;
       if (!$payOrder->save()) {
