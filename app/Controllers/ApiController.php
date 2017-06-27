@@ -133,6 +133,7 @@ class ApiController extends BaseController
       // $request->setParams($_POST); //Optional
       // var_dump($request->getParsedBody());exit;
       PayOrder::add(1, json_encode(file_get_contents('php://input')));
+      var_dump(file_get_contents('php://input'));exit;
       // try {
       //   $response = $request->send();
       //   if($response->isPaid()){
