@@ -116,42 +116,23 @@ class ApiController extends BaseController
     }
     public function alipay($request, $response, $args){
       $money = $request->getParam('money');
+      $user_id = $request->getParam('user_id');
+      $order_id = date('YmdHis') . mt_rand(1000, 9999);
       $gateway = $this->intAliPay();
       $request = $gateway->purchase();
       $request->setBizContent([
         'subject'      => Config::get('appName').' 充值',
-        'out_trade_no' => date('YmdHis') . mt_rand(1000, 9999),
+        'out_trade_no' => $order_id,
         'total_amount' => $money
       ]);
       $response = $request->send();
-      var_dump($response);exit;
+      PayOrder::add($user_id, $order_id, '');
       return json_encode($response->getAlipayResponse());
     }
     public function alipayCallback($request, $response, $args){
-      // PayOrder::add(1, $request->setParams($_POST));
-      // $callback = json_decode(file_get_contents('php://input'));
-      PayOrder::add(1,json_encode($_POST));
-      // PayOrder::add(1, json_encode([
-      //   'trade_status' => $callback['trade_status'],
-      //   'out_trade_no' => $callback['out_trade_no'],
-      //   'buyer_logon_id' => $callback['buyer_logon_id'],
-      //   'total_amount' => $callback['total_amount'],
-      //   'receipt_amount' => $callback['receipt_amount'],
-      //   'body' => $callback['body'],
-      //   ]));
-
-      // var_dump(file_get_contents('php://input'));
-      // echo $callback['trade_status'];
-      // try {
-      //   $response = $request->send();
-      //   if($response->isPaid()){
-      //     die('success'); //The response should be 'success' only
-      //   }else{
-      //     die('fail');
-      //   }
-      // } catch (Exception $e) {
-      //     die('fail');
-      // }
+      $callback = $_POST;
+      unset($callback['seller_email'],$callback['open_id'],$callback['sign'],$callback['sign_type']);
+      PayOrder::update($_POST['out_trade_no'] ,json_encode($callback));
     }
     private function intAliPay(){
       $gateway = Omnipay::create('Alipay_AopF2F');
