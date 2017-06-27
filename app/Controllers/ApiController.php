@@ -131,7 +131,14 @@ class ApiController extends BaseController
     public function alipayCallback($request, $response, $args){
       $callback = $_POST;
       unset($callback['seller_email'],$callback['open_id'],$callback['sign'],$callback['sign_type']);
-      PayOrder::update($_POST['out_trade_no'] ,json_encode($callback));
+      PayOrder::update($_POST['out_trade_no'], json_encode($callback));
+    }
+    public function alipayStatus($request, $response, $args){
+      $data = json_decode(PayOrder::find($request->getParam('order_id')), true);
+      if ($data['fund_bill_list']) {
+        $data['fund_bill_list'] = json_decode($data['fund_bill_list']);
+      }
+      return json_encode($data);
     }
     private function intAliPay(){
       $gateway = Omnipay::create('Alipay_AopF2F');
