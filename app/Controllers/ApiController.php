@@ -117,16 +117,15 @@ class ApiController extends BaseController
     public function alipay($request, $response, $args){
       $money = $request->getParam('money');
       $user_id = $request->getParam('user_id');
-      $order_id = date('YmdHis') . mt_rand(1000, 9999);
       $gateway = $this->intAliPay();
       $request = $gateway->purchase();
       $request->setBizContent([
         'subject'      => Config::get('appName').' 充值',
-        'out_trade_no' => $order_id,
+        'out_trade_no' => date('YmdHis') . mt_rand(1000, 9999),
         'total_amount' => $money
       ]);
       $response = $request->send();
-      PayOrder::add($user_id, $order_id, '');
+      PayOrder::add($user_id, $response->getAlipayResponse()['out_trade_no'], '');
       return json_encode($response->getAlipayResponse());
     }
     public function alipayCallback($request, $response, $args){
