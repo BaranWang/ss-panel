@@ -132,8 +132,8 @@ class ApiController extends BaseController
       // $request = $gateway->completePurchase();
       // $request->setParams($_POST); //Optional
       // var_dump($request->getParsedBody());exit;
-      PayOrder::add(1, json_encode($_POST));
-      echo json_encode($_POST);exit;
+      // PayOrder::add(1, json_encode($_POST));
+      echo json_encode(stream_get_contents(STDIN));exit;
       // try {
       //   $response = $request->send();
       //   if($response->isPaid()){
