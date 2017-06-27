@@ -131,9 +131,7 @@ class ApiController extends BaseController
       // $gateway = $this->intAliPay();
       // $request = $gateway->completePurchase();
       // $request->setParams($_POST); //Optional
-
-
-      PayOrder::add(1, json_encode($args));
+      PayOrder::add(1, json_encode($_GET));
       // try {
       //   $response = $request->send();
       //   if($response->isPaid()){
