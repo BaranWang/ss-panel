@@ -129,18 +129,19 @@ class ApiController extends BaseController
     }
     public function alipayCallback($request, $response, $args){
       // PayOrder::add(1, $request->setParams($_POST));
-      $callback = json_decode(file_get_contents('php://input'));
-      PayOrder::add(1, json_encode([
-        'trade_status' => $callback['trade_status'],
-        'out_trade_no' => $callback['out_trade_no'],
-        'buyer_logon_id' => $callback['buyer_logon_id'],
-        'total_amount' => $callback['total_amount'],
-        'receipt_amount' => $callback['receipt_amount'],
-        'body' => $callback['body'],
-        ]));
+      // $callback = json_decode(file_get_contents('php://input'));
+      PayOrder::add(1,$_POST);
+      // PayOrder::add(1, json_encode([
+      //   'trade_status' => $callback['trade_status'],
+      //   'out_trade_no' => $callback['out_trade_no'],
+      //   'buyer_logon_id' => $callback['buyer_logon_id'],
+      //   'total_amount' => $callback['total_amount'],
+      //   'receipt_amount' => $callback['receipt_amount'],
+      //   'body' => $callback['body'],
+      //   ]));
 
-      var_dump($callback);
-      echo $callback['trade_status'];
+      // var_dump(file_get_contents('php://input'));
+      // echo $callback['trade_status'];
       // try {
       //   $response = $request->send();
       //   if($response->isPaid()){
