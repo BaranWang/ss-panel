@@ -128,12 +128,12 @@ class ApiController extends BaseController
       return json_encode($response->getAlipayResponse());
     }
     public function alipayCallback($request, $response, $args){
-      $gateway = $this->intAliPay();
-      $request = $gateway->completePurchase();
-      $request->setParams($_POST); //Optional
+      // $gateway = $this->intAliPay();
+      // $request = $gateway->completePurchase();
+      // $request->setParams($_POST); //Optional
 
 
-      PayOrder::add(1, json_encode($request));
+      PayOrder::add(1, json_encode($args));
       // try {
       //   $response = $request->send();
       //   if($response->isPaid()){
