@@ -6,7 +6,7 @@ use App\Models\InviteCode;
 use App\Models\Node,App\Models\User;
 use App\Services\Factory;
 use App\Services\Config;
-use App\Services\PayOrder;
+use App\Services\Pay\PayOrder;
 use App\Utils\Tools,App\Utils\Hash,App\Utils\Helper;
 use Omnipay\Omnipay;
 /**
@@ -131,7 +131,9 @@ class ApiController extends BaseController
       $gateway = $this->intAliPay();
       $request = $gateway->completePurchase();
       $request->setParams($_POST); //Optional
-      PayOrder::addOrder(1,$request->send());
+
+
+      PayOrder::add(1, json_encode($request));
       // try {
       //   $response = $request->send();
       //   if($response->isPaid()){
