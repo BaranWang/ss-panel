@@ -11,7 +11,7 @@ class PayOrder
     public static function add($userId, $orderId, $data)
     {
         $payOrder = new PayOrderModel();
-        $payOrder->id = $orderId;
+        $payOrder->order_id = $orderId;
         $payOrder->user_id = $userId;
         $payOrder->data = $data;
         if (!$payOrder->save()) {
@@ -21,7 +21,7 @@ class PayOrder
     }
     public static function update($orderId, $data)
     {
-        $payOrder = PayOrderModel::where('id', $orderId)->first();
+        $payOrder = PayOrderModel::where('order_id', $orderId)->first();
 
         $payOrder->data = $data;
         if (!$payOrder->save()) {
@@ -31,7 +31,7 @@ class PayOrder
     }
     public static function find($orderId)
     {
-        $payOrder = PayOrderModel::where('id', $orderId)->first();
+        $payOrder = PayOrderModel::where('order_id', $orderId)->first();
         return $payOrder;
     }
 }
