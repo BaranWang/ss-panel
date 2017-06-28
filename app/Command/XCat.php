@@ -14,7 +14,6 @@ use App\Utils\Tools;
 
 class XCat
 {
-
     public $argv;
 
     public function __construct($argv)
@@ -33,6 +32,8 @@ class XCat
                 return $this->resetTraffic();
             case("sendDiaryMail"):
                 return DailyMail::sendDailyMail();
+            case("autoToll"):
+                return autoToll::toll();
             default:
                 return $this->defaultAction();
         }

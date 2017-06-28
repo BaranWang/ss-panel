@@ -142,7 +142,7 @@ class ApiController extends BaseController
         $callback = $_POST;
         unset($callback['seller_email'], $callback['open_id'], $callback['sign'], $callback['sign_type']);
         PayOrder::update($_POST['out_trade_no'], json_encode($callback));
-        if ($this->trade_status($_POST)) {
+        if ($this->alipayTradeStatus($_POST)) {
             $user = User::find(PayOrder::find($_POST['out_trade_no'])->user_id);
             $user->transfer_enable = $user->transfer_enable + Tools::toGB($_POST['total_amount']);
             $user->save();
@@ -152,7 +152,7 @@ class ApiController extends BaseController
     {
         $data = json_decode(PayOrder::find($request->getParam('order_id')->data), true);
         return json_encode([
-          'status' => $this->trade_status($data)
+          'status' => $this->alipayTradeStatus($data)
           ]);
     }
     private function intAliPay()
@@ -168,7 +168,7 @@ class ApiController extends BaseController
         }
         return $gateway;
     }
-    private function trade_status($data)
+    private function alipayTradeStatus($data)
     {
         if ($data['trade_status']) {
             if ($data['trade_status'] == 'TRADE_SUCCESS') {
