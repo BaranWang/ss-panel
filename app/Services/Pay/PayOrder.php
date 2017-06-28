@@ -10,29 +10,28 @@ class PayOrder
 {
     public static function add($userId, $orderId, $data)
     {
-      $payOrder = new PayOrderModel();
-
-      $payOrder->user_id = $userId;
-      $payOrder->order_id = $orderId;
-      $payOrder->data = $data;
-      if (!$payOrder->save()) {
-          return false;
-      }
-      return true;
+        $payOrder = new PayOrderModel();
+        $payOrder->id = $orderId;
+        $payOrder->user_id = $userId;
+        $payOrder->data = $data;
+        if (!$payOrder->save()) {
+            return false;
+        }
+        return true;
     }
     public static function update($orderId, $data)
     {
-      $payOrder = PayOrderModel::where('order_id', $orderId)->first();
+        $payOrder = PayOrderModel::where('id', $orderId)->first();
 
-      $payOrder->data = $data;
-      if (!$payOrder->save()) {
-          return false;
-      }
-      return true;
+        $payOrder->data = $data;
+        if (!$payOrder->save()) {
+            return false;
+        }
+        return true;
     }
     public static function find($orderId)
     {
-      $payOrder = PayOrderModel::where('order_id', $orderId)->first();
-      return $payOrder;
+        $payOrder = PayOrderModel::where('id', $orderId)->first();
+        return $payOrder;
     }
 }

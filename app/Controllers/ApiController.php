@@ -144,7 +144,7 @@ class ApiController extends BaseController
         PayOrder::update($_POST['out_trade_no'], json_encode($callback));
         if ($this->trade_status($_POST)) {
             $user = User::find(PayOrder::find($_POST['out_trade_no'])->user_id);
-            $user->transfer_enable = $user->transfer_enable + $_POST['total_amount'];
+            $user->transfer_enable = $user->transfer_enable + Tools::toGB($_POST['total_amount']);
             $user->save();
         }
     }
