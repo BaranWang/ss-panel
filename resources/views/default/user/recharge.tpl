@@ -64,6 +64,7 @@ MyApp.controller('ViewController', function($scope, $http, $mdDialog) {
 
     </md-tab>
     <md-tab label="转账支付">
+      <p>如果无法通过快捷支付的方式充值，可直接转账至下发</p>
       <md-radio-group ng-model="payQrcode">
         <md-radio-button value="wxp://f2f0aZ-_6vh-VMhIsJ2xtGFboGi6RD57Oc0y" ng-selected="true">
           <img class="payment-method" src="/assets/p-ss.men/img/pay_wepay.svg" alt="微信支付">
