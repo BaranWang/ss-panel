@@ -2,33 +2,34 @@
 {block name=ng}'ngSanitize'{/block}
 {block name=main}
 <script>
-MyApp.controller('ViewController', function($scope, $http, $mdDialog) {
-  $scope.recharge = {
-    user_id: {$user->id}
-  }
+MyApp.controller('ViewController', function($scope, $http, $mdDialog, $interval) {
   $scope.rechargeFunction = function(ev) {
+    $mdDialog.show({
+      contentElement: '#payQrcode',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: false,
+      fullscreen: true
+    })
+    $scope.trade_status = 'loading'
     $http.post('/api/pay/' + $scope.paymentMethod, $scope.recharge).then(function(res) {
+      $scope.trade_status = 'nosuccess'
       $scope.orderInfo = res.data
-      $mdDialog.show({
-        contentElement: '#payQrcode',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose: false,
-        fullscreen: true
-      })
-      $interval(function() {
+      var stop = $interval(function() {
         $http.get('/api/pay/' + $scope.paymentMethod + '?order_id=' + res.data.out_trade_no).then(function(callback) {
-          var status = callback.data.trade_status
-          if (status) {
-            $scope.trade_status = status == 'TRADE_SUCCESS' || status == 'TRADE_FINISHED' ? true : false
-          } else if (callback.data.code == '10000') {
-            $scope.trade_status = true;
+          console.log(callback.data.status);
+          if (callback.data.status) {
+            $scope.trade_status = 'success'
+            $interval.cancel(stop);
           } else {
-            $scope.trade_status = false;
+            $scope.trade_status = 'nosuccess'
           }
         })
-      }, 2000)
+      }, 3000)
     })
+  }
+  $scope.close = function() {
+    $mdDialog.cancel();
   }
 })
 </script>
@@ -64,8 +65,8 @@ MyApp.controller('ViewController', function($scope, $http, $mdDialog) {
 
     </md-tab>
     <md-tab label="转账支付">
-      <p>如果无法通过快捷支付的方式充值，可直接转账至下发</p>
-      <md-radio-group ng-model="payQrcode">
+      <p>如果无法通过快捷支付的方式充值，可直接扫描下方二维码转账</p>
+      <md-radio-group ng-model="payQrcode" layout="row">
         <md-radio-button value="wxp://f2f0aZ-_6vh-VMhIsJ2xtGFboGi6RD57Oc0y" ng-selected="true">
           <img class="payment-method" src="/assets/p-ss.men/img/pay_wepay.svg" alt="微信支付">
         </md-radio-button>
@@ -73,23 +74,37 @@ MyApp.controller('ViewController', function($scope, $http, $mdDialog) {
           <img class="payment-method" src="/assets/p-ss.men/img/pay_alipay.svg" alt="支付宝">
         </md-radio-button>
       </md-radio-group>
+      <p flex></p>
       <img class="pay-qrcode" ng-if="payQrcode" ng-src="/res/qrcode?size=480&text={literal}{{payQrcode}}{/literal}">
     </md-tab>
   </md-tabs>
   <div style="visibility:hidden">
     <div class="md-dialog-container pay-qrcode-wrap" id="payQrcode">
-      <md-dialog layout-padding layout="column" layout-align="center center" flex="80">
-        <h1 class="md-display-2" ng-bind="recharge.money|currency:'¥':2"></h1>
-        <img class="pay-qrcode" ng-src="/res/qrcode?size=480&text={literal}{{orderInfo.qr_code}}{/literal}">
-        <div class="order-info" layout="column" layout-padding>
-          <p layout="row" flex>
-            <span flex>商品名称</span>
-            <span>{$config["appName"]} 充值</span>
-          </p>
-          <p layout="row" flex>
-            <span flex>交易单号</span>
-            <span ng-bind="orderInfo.out_trade_no"></span>
-          </p>
+      <md-dialog layout-padding flex="80">
+        <div ng-switch="trade_status">
+          <div ng-switch-when="loading" layout="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+          </div>
+          <div ng-switch-when="nosuccess" layout="column" layout-align="center center">
+            <h1 class="md-display-2" ng-bind="recharge.money|currency:'¥':2"></h1>
+            <img class="pay-qrcode" ng-src="/res/qrcode?size=480&text={literal}{{orderInfo.qr_code}}{/literal}">
+            <md-button class="md-raised md-primary" ng-href="{literal}{{orderInfo.qr_code}}{/literal}" flex>手机直接点此付款</md-button>
+            <div class="order-info" layout="column" layout-padding>
+              <p layout="row" flex>
+                <span flex>商品名称</span>
+                <span>{$config["appName"]} 充值 - {$user->email}</span>
+              </p>
+              <p layout="row" flex>
+                <span flex>交易单号</span>
+                <span ng-bind="orderInfo.out_trade_no"></span>
+              </p>
+            </div>
+          </div>
+          <div ng-switch-when="success" layout="column" layout-align="center center">
+            <md-icon class="material-icons md-primary" style="width:72px;height:72px;font-size:72px">&#xE86C;</md-icon>
+            <h1 class="md-display-2">充值成功</h1>
+            <md-button class="md-raised md-primary" ng-click="close()">我知道了</md-button>
+          </div>
         </div>
       </md-dialog>
     </div>

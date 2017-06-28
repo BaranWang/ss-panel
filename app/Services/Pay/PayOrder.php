@@ -33,6 +33,6 @@ class PayOrder
     public static function find($orderId)
     {
       $payOrder = PayOrderModel::where('order_id', $orderId)->first();
-      return $payOrder->data;
+      return $payOrder;
     }
 }

@@ -40,7 +40,8 @@
         <md-card-title-text class="md-headline">账户余额</md-card-title-text>
       </md-card-title>
       <md-card-content>
-        <md-button class="md-raised md-primary" ng-href="/user/recharge">充值</md-button>
+        <p class="md-display-1" ng-bind="'{$user->unusedTraffic()|string_format:"%.2f"}'|currency:'¥'" style="margin-bottom:16px"></p>
+        <md-button class="md-raised md-primary" ng-href="/user/recharge">立即充值</md-button>
       </md-card-content>
     </md-card>
     <md-card>
