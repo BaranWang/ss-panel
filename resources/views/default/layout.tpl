@@ -11,6 +11,7 @@
   <script src="//cdn.bootcss.com/angular.js/1.6.4/angular.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.6.4/angular-animate.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.6.4/angular-aria.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.6.4/angular-sanitize.min.js"></script>
   <script src="//cdn.bootcss.com/angular-material/1.1.4/angular-material.min.js"></script>
   {block name=jslink}{/block}
   <script>

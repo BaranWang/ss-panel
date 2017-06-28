@@ -1,6 +1,6 @@
 {extends file='user/layout.tpl'}
 {block name=main}
-<script>
+{* <script>
   MyApp.controller('ViewController', function($scope, $http, $mdDialog) {
     $scope.pay = function() {
       $mdDialog.show(
@@ -21,7 +21,7 @@
 
     }
   })
-</script>
+</script> *}
 <div class="page-title" layout-padding>
   <h2 class="md-headline">用户中心 <span class="md-subhead">User Center</span></h2>
 </div>
@@ -40,7 +40,7 @@
         <md-card-title-text class="md-headline">账户余额</md-card-title-text>
       </md-card-title>
       <md-card-content>
-        <md-button class="md-raised md-primary" ng-click="pay()">充值</md-button>
+        <md-button class="md-raised md-primary" ng-href="/user/recharge">充值</md-button>
       </md-card-content>
     </md-card>
     <md-card>

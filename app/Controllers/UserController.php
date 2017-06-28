@@ -248,4 +248,8 @@ class UserController extends BaseController
       }
       return json_encode($traffic);exit;
     }
+    public function recharge($request, $response, $args)
+    {
+      return $this->view()->display('user/recharge.tpl');
+    }
 }
