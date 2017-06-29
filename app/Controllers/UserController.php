@@ -9,16 +9,15 @@ use App\Models\TrafficLog;
 use App\Services\Auth;
 use App\Services\Config;
 use App\Services\DbConfig;
+use App\Services\Pay\MoneyLog;
 use App\Utils\Hash;
 use App\Utils\Tools;
-
 
 /**
  *  HomeController
  */
 class UserController extends BaseController
 {
-
     private $user;
 
     public function __construct()
@@ -56,7 +55,6 @@ class UserController extends BaseController
         $node = Node::find($id);
 
         if ($node == null) {
-
         }
         $ary['server'] = $node->server;
         $ary['server_port'] = $this->user->port;
@@ -160,7 +158,8 @@ class UserController extends BaseController
         } elseif (strlen($pwd) < 5) {
             $res['ret'] = 0;
             $res['msg'] = "密码要大于4位或者留空生成随机密码";
-            return $response->getBody()->write(json_encode($res));;
+            return $response->getBody()->write(json_encode($res));
+            ;
         }
         $user->updateSsPwd($pwd);
         $res['ret'] = 1;
@@ -240,16 +239,66 @@ class UserController extends BaseController
     }
     public function trafficLogJson($request, $response, $args)
     {
-      $traffic = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->get();
-      foreach ($traffic as $key => $value) {
-        $traffic[$key]['log_time'] = $traffic[$key]['log_time'] * 1000;
-        $traffic[$key]['traffic'] = ($traffic[$key]['d'] + $traffic[$key]['u']) * $traffic[$key]['rate'];
-        $traffic[$key]['node'] = Node::find($traffic[$key]['node_id'])['name'];
-      }
-      return json_encode($traffic);exit;
+        $day = $request->getParam('day');
+        if ($day) {
+            $dayTS = strtotime(date('Y-m-d')) - ($day - 1) * 86400;
+            $traffic = TrafficLog::where('user_id', $this->user->id)->where('log_time', '>', $dayTS)->orderBy('id', 'desc')->get();
+        } else {
+            $traffic = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->get();
+        }
+        foreach ($traffic as $key => $value) {
+            $traffic[$key]['log_time'] = $traffic[$key]['log_time'] * 1000;
+            $traffic[$key]['traffic'] = ($traffic[$key]['d'] + $traffic[$key]['u']) * $traffic[$key]['rate'];
+            $traffic[$key]['node'] = Node::find($traffic[$key]['node_id'])['name'];
+        }
+        return json_encode($traffic);
+        exit;
     }
     public function recharge($request, $response, $args)
     {
-      return $this->view()->display('user/recharge.tpl');
+        return $this->view()->display('user/recharge.tpl');
+    }
+    public function bill($request, $response, $args)
+    {
+        return $this->view()->display('user/bill.tpl');
+    }
+    public function billApi($request, $response, $args)
+    {
+        $number = 50;
+        $page = $request->getParam('page');
+        $type = $request->getParam('type');
+        $page = $page ? $page : 1;
+        $result = MoneyLog::find($this->user->id);
+        foreach ($result as $key => $value) {
+            $_result[$key]['id'] = $value['id'];
+            $_result[$key]['type'] = $value['type'];
+            $_result[$key]['money'] = (float)$value['money'];
+            $_result[$key]['log'] = $value['log'];
+            $_result[$key]['time'] = $value['time'];
+        }
+        $trafficLog = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->get();
+        foreach ($trafficLog as $key => $value) {
+            $_trafficLog[$key]['id'] = $value['id'];
+            $_trafficLog[$key]['type'] = 'deduct';
+            $_trafficLog[$key]['money'] = -($value['d'] + $value['u']) / 1024 / 1024 / 1024;
+            $_trafficLog[$key]['log'] = "使用流量 {$value['traffic']}";
+            $_trafficLog[$key]['time'] = gmdate('Y-m-d H:i:s', $value['log_time']);
+        }
+        $logs = array_merge($_result, $_trafficLog);
+        if ($type) {
+            $logs = array_filter($logs, function ($value) use ($type) {
+                return $value['type'] == $type;
+            });
+        }
+        $times = [];
+        foreach ($logs as $log) {
+            $times[] = $log['time'];
+        }
+        array_multisort($times, SORT_DESC, $logs);
+        $_logs = array_slice($logs, $number * ($page - 1), $number);
+        return json_encode([
+          'page'=> ceil(count($logs)/$number),
+          'data' => $_logs
+          ]);
     }
 }

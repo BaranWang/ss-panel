@@ -9,6 +9,7 @@ use App\Services\Factory;
 use App\Services\Config;
 use App\Services\Auth;
 use App\Services\Pay\PayOrder;
+use App\Services\Pay\MoneyLog;
 use App\Utils\Tools;
 use App\Utils\Hash;
 use App\Utils\Helper;
@@ -146,9 +147,14 @@ class ApiController extends BaseController
             $user = User::find(PayOrder::find($_POST['out_trade_no'])->user_id);
             $user->transfer_enable = $user->transfer_enable + Tools::toGB($_POST['total_amount']);
             $user->save();
-            $inviter = User::find($user->ref_by);
-            $inviter->transfer_enable = $inviter->transfer_enable + Tools::toGB($_POST['total_amount'] * 0.1);
-            $inviter->save();
+            MoneyLog::add($user->id, 'recharge', $_POST['total_amount'] ,'支付宝充值');
+            if ($user->ref_by != 0) {
+              $inviter = User::find($user->ref_by);
+              $returnMoney = $_POST['total_amount'] * 0.1;
+              $inviter->transfer_enable = $inviter->transfer_enable + Tools::toGB($returnMoney);
+              $inviter->save();
+              MoneyLog::add($user->id, 'return', $returnMoney , $user->user_name.' 充值返利');
+            }
         }
     }
     public function alipayStatus($request, $response, $args)

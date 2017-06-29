@@ -4,6 +4,64 @@ body {
   overflow: hidden;
 }
 
+table.md-table {
+  font-size: 13px;
+  white-space: nowrap;
+  border-collapse: collapse;
+  background-color: #fff;
+  // border: 1px solid rgba(0,0,0,.12);
+  thead {
+    padding-bottom: 4px;
+  }
+  tbody {
+    tr {
+      position: relative;
+      height: 48px;
+      transition: background-color .28s cubic-bezier(.4,0,.2,1);
+      &:hover {
+        background-color: #eee;
+      }
+    }
+  }
+  td,
+  th {
+    padding: 0 16px 12px 16px;
+    text-align: right;
+    &:first-of-type {
+      padding-left: 24px;
+    }
+
+    &:last-of-type {
+      padding-right: 24px;
+    }
+  }
+  td {
+    position: relative;
+    height: 48px;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    border: solid rgba(0,0,0,.12);
+    border-width: 1px 0;
+  }
+  th {
+    position: relative;
+    height: 48px;
+    box-sizing: border-box;
+    padding-bottom: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 24px;
+    color: rgba(0,0,0,.54);
+    text-overflow: ellipsis;
+    letter-spacing: 0;
+    vertical-align: bottom;
+  }
+  .cell--non-numeric {
+    text-align: left;
+  }
+}
+
+
 #logo {
   width: 120px;
   height: 24px;

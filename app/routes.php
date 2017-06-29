@@ -55,6 +55,8 @@ $app->group('/user', function () {
     $this->get('/trafficlog', 'App\Controllers\UserController:trafficLog');
     $this->post('/trafficlog', 'App\Controllers\UserController:trafficLogJson');
     $this->get('/recharge', 'App\Controllers\UserController:recharge');
+    $this->get('/bill', 'App\Controllers\UserController:bill');
+    $this->post('/bill', 'App\Controllers\UserController:billApi');
     $this->get('/kill', 'App\Controllers\UserController:kill');
     $this->post('/kill', 'App\Controllers\UserController:handleKill');
     $this->get('/logout', 'App\Controllers\UserController:logout');

@@ -35,7 +35,7 @@ MyApp.controller('ViewController', function($scope, $http, $mdDialog, $interval)
 </script>
 <div id="rechargeView">
   <div class="page-title" layout-padding>
-    <h2 class="md-headline">账户充值 <span class="md-subhead">Node List</span></h2>
+    <h2 class="md-headline">账户充值 <span class="md-subhead">Account Recharge</span></h2>
   </div>
   <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="快捷支付">
