@@ -146,6 +146,9 @@ class ApiController extends BaseController
             $user = User::find(PayOrder::find($_POST['out_trade_no'])->user_id);
             $user->transfer_enable = $user->transfer_enable + Tools::toGB($_POST['total_amount']);
             $user->save();
+            $inviter = User::find($user->ref_by);
+            $inviter->transfer_enable = $inviter->transfer_enable + Tools::toGB($_POST['total_amount'] * 0.1);
+            $inviter->save();
         }
     }
     public function alipayStatus($request, $response, $args)
