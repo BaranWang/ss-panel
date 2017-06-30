@@ -154,7 +154,7 @@ class ApiController extends BaseController
                 $returnMoney = $_POST['total_amount'] * 0.1;
                 $inviter->transfer_enable = $inviter->transfer_enable + Tools::toGB($returnMoney);
                 $inviter->save();
-                MoneyLog::add($user->id, 'return', $returnMoney , $user->user_name.' 充值返利');
+                MoneyLog::add($inviter->id, 'return', $returnMoney , $user->user_name.' 充值返利');
               }
             }
         }
