@@ -144,10 +144,10 @@ class ApiController extends BaseController
         unset($callback['seller_email'], $callback['open_id'], $callback['sign'], $callback['sign_type']);
         PayOrder::update($_POST['out_trade_no'], json_encode($callback));
         if ($this->alipayTradeStatus($_POST)) {
-            $user = User::find(PayOrder::find($_POST['out_trade_no'])->user_id);
-            $user->transfer_enable = $user->transfer_enable + Tools::toGB($_POST['total_amount']);
-            $user->save();
             if (MoneyLog::findByOrder($_POST['out_trade_no'])->id == null) {
+              $user = User::find(PayOrder::find($_POST['out_trade_no'])->user_id);
+              $user->transfer_enable = $user->transfer_enable + Tools::toGB($_POST['total_amount']);
+              $user->save();
               MoneyLog::add($user->id, 'recharge', $_POST['total_amount'] ,"支付宝充值 {$_POST['out_trade_no']}");
               if ($user->ref_by != 0) {
                 $inviter = User::find($user->ref_by);
