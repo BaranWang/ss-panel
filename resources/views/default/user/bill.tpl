@@ -12,6 +12,7 @@ MyApp.controller('ViewController', function($scope, $http, $window) {
   $scope.data = []
   $scope.$watch('page', function(page) {
     $http.post('', {
+      type: $scope.type,
       page: page
     }).then(function(res) {
       $scope.loading = false
