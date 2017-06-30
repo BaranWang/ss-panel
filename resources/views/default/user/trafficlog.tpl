@@ -37,7 +37,7 @@
     chart.axis('log_time', { title: null });
     chart.axis('traffic', { title: null });
     // chart.legend({ position: 'bottom' });
-    chart.line().position('log_time*traffic').color('node').shape('smooth').size(2);
+    chart.line().position('log_time*traffic').color('node').size(2);
     chart.render();
 
     $scope.day = 1;
