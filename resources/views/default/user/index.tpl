@@ -1,27 +1,5 @@
 {extends file='user/layout.tpl'}
 {block name=main}
-{* <script>
-  MyApp.controller('ViewController', function($scope, $http, $mdDialog) {
-    $scope.pay = function() {
-      $mdDialog.show(
-        $mdDialog.prompt()
-        .title('充值')
-        .placeholder('请输入充值金额')
-        .ok('立即支付')
-      ).then(function(money) {
-        $http.post('/api/pay/alipay', { user_id: {$user->id}, money: money }).then(function(res) {
-          console.log(res);
-          // img = $sanitize('<img scr="/api/qrcode?text=' + res.data.qr_code + '">')
-          // $mdDialog.show(
-          //   $mdDialog.alert()
-          //   .htmlContent(img)
-          // )
-        })
-      })
-
-    }
-  })
-</script> *}
 <div class="page-title" layout-padding>
   <h2 class="md-headline">用户中心 <span class="md-subhead">User Center</span></h2>
 </div>

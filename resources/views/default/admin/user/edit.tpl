@@ -1,5 +1,5 @@
-{include file='admin/main.tpl'}
-
+{extends file='admin/layout.tpl'}
+{block name=main}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -115,9 +115,9 @@
                                         <div class="col-sm-9">
                                             <select class="form-control" id="method">
                                             {foreach $method as $cipher}
-                                               <option value="{$cipher}" {if $user->method==$cipher}selected="selected"{/if} >{$cipher}</option>  
+                                               <option value="{$cipher}" {if $user->method==$cipher}selected="selected"{/if} >{$cipher}</option>
                                             {/foreach}
-                                            </select>  
+                                            </select>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -243,4 +243,4 @@
 </script>
 
 
-{include file='admin/footer.tpl'}
+{/block}

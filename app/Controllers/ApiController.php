@@ -147,13 +147,15 @@ class ApiController extends BaseController
             $user = User::find(PayOrder::find($_POST['out_trade_no'])->user_id);
             $user->transfer_enable = $user->transfer_enable + Tools::toGB($_POST['total_amount']);
             $user->save();
-            MoneyLog::add($user->id, 'recharge', $_POST['total_amount'] ,'支付宝充值');
-            if ($user->ref_by != 0) {
-              $inviter = User::find($user->ref_by);
-              $returnMoney = $_POST['total_amount'] * 0.1;
-              $inviter->transfer_enable = $inviter->transfer_enable + Tools::toGB($returnMoney);
-              $inviter->save();
-              MoneyLog::add($user->id, 'return', $returnMoney , $user->user_name.' 充值返利');
+            if (MoneyLog::findByOrder($_POST['out_trade_no'])->id == null) {
+              MoneyLog::add($user->id, 'recharge', $_POST['total_amount'] ,"支付宝充值 {$_POST['out_trade_no']}");
+              if ($user->ref_by != 0) {
+                $inviter = User::find($user->ref_by);
+                $returnMoney = $_POST['total_amount'] * 0.1;
+                $inviter->transfer_enable = $inviter->transfer_enable + Tools::toGB($returnMoney);
+                $inviter->save();
+                MoneyLog::add($user->id, 'return', $returnMoney , $user->user_name.' 充值返利');
+              }
             }
         }
     }

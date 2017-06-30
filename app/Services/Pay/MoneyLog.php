@@ -21,9 +21,17 @@ class MoneyLog
     }
     public static function find($userId)
     {
-        $result = MoneyLogModel::all()->where('user_id',$userId);
+        $result = MoneyLogModel::all()->where('user_id', $userId);
         foreach ($result as $key => $value) {
-          $result[$key]['log'] = json_decode($value['log']);
+            $result[$key]['log'] = json_decode($value['log']);
+        }
+        return $result;
+    }
+    public static function findByOrder($order)
+    {
+        $result = MoneyLogModel::where('log', 'LIKE', '%'.$order.'%')->first();
+        foreach ($result as $key => $value) {
+            $result[$key]['log'] = json_decode($value['log']);
         }
         return $result;
     }

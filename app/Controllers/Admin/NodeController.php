@@ -16,21 +16,13 @@ class NodeController extends AdminController
     public function create($request, $response, $args)
     {
         $method = Node::getCustomerMethod();
-        return $this->view()->assign('method', $method)->display('admin/node/create.tpl');
+        return $this->view()->assign('method', $method)->display('admin/node/edit.tpl');
     }
 
     public function add($request, $response, $args)
     {
         $node = new Node();
-        $node->name = $request->getParam('name');
-        $node->server = $request->getParam('server');
-        $node->method = $request->getParam('method');
-        $node->custom_method = $request->getParam('custom_method');
-        $node->traffic_rate = $request->getParam('rate');
-        $node->info = $request->getParam('info');
-        $node->type = $request->getParam('type');
-        $node->status = $request->getParam('status');
-        $node->sort = $request->getParam('sort');
+        $node['attributes'] = $request->getParsedBody();
         if (!$node->save()) {
             $rs['ret'] = 0;
             $rs['msg'] = "添加失败";
@@ -56,16 +48,7 @@ class NodeController extends AdminController
     {
         $id = $args['id'];
         $node = Node::find($id);
-
-        $node->name = $request->getParam('name');
-        $node->server = $request->getParam('server');
-        $node->method = $request->getParam('method');
-        $node->custom_method = $request->getParam('custom_method');
-        $node->traffic_rate = $request->getParam('rate');
-        $node->info = $request->getParam('info');
-        $node->type = $request->getParam('type');
-        $node->status = $request->getParam('status');
-        $node->sort = $request->getParam('sort');
+        $node['attributes'] = $request->getParsedBody();
         if (!$node->save()) {
             $rs['ret'] = 0;
             $rs['msg'] = "修改失败";

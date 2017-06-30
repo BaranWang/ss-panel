@@ -1,125 +1,64 @@
-{include file='admin/main.tpl'}
-
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            站点配置
-            <small>App Config</small>
-        </h1>
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="msg-success" class="alert alert-info alert-dismissable" style="display: none;">
-                    <button type="button" class="close" id="ok-close" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-info"></i> 成功!</h4>
-
-                    <p id="msg-success-p"></p>
-                </div>
-
-            </div>
-        </div>
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-6">
-                <!-- general form elements -->
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">修改配置</h3>
-                    </div>
-                    <!-- /.box-header -->
-
-                    <div class="box-body">
-                        <form role="form">
-                            <div class="form-group">
-                                <label>网站名</label>
-                                <input type="text" class="form-control" placeholder="Enter ..." id="app-name"
-                                       value="{$conf['app-name']}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>统计代码</label>
-                                <textarea class="form-control" id="analytics-code" rows="3"
-                                          placeholder="Enter ...">{$conf['analytics-code']}</textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label>邀请页公告</label>
-                                <textarea class="form-control" id="home-code" rows="3"
-                                          placeholder="Enter ...">{$conf['home-code']}</textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label>用户中心公告</label>
-                                <textarea class="form-control" id="user-index" rows="3"
-                                          placeholder="Enter ...">{$conf['user-index']}</textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label>用户节点公告</label>
-                                <textarea class="form-control" id="user-node" rows="3"
-                                          placeholder="Enter ...">{$conf['user-node']}</textarea>
-                            </div>
-
-                        </form>
-                    </div>
-                    <!-- /.box-body -->
-
-                    <div class="box-footer">
-                        <button id="update" type="submit" name="update" value="update" class="btn btn-primary">更新配置
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">其他信息</h3>
-                    </div>
-                    <div class="box-footer">
-                    </div>
-                </div>
-            </div>
-            <!-- /.box -->
-        </div>
-        <!-- /.row -->
-    </section>
-    <!-- /.content -->
-</div><!-- /.content-wrapper -->
-
+{extends file='admin/layout.tpl'}
+{block name=main}
 <script>
-    $(document).ready(function () {
-        $("#update").click(function () {
-            $.ajax({
-                type: "PUT",
-                url: "/admin/config",
-                dataType: "json",
-                data: {
-                    analyticsCode: $("#analytics-code").val(),
-                    homeCode: $("#home-code").val(),
-                    appName: $("#app-name").val(),
-                    userIndex: $("#user-index").val(),
-                    userNode: $("#user-node").val()
-                },
-                success: function (data) {
-                    if (data.ret) {
-                        $("#msg-success").show(100);
-                        $("#msg-success-p").html(data.msg);
-                        //window.setTimeout("location.href='/admin/invite'", 2000);
-                    }
-                    // window.location.reload();
-                },
-                error: function (jqXHR) {
-                    alert("发生错误：" + jqXHR.status);
-                }
-            })
-        })
-    })
+  MyApp.controller('ViewController', function($scope, $http, $mdDialog) {
+    $scope.config = {
+      appName: "{$conf['app-name']}",
+      analyticsCode: "{$conf['analytics-code']|escape:'javascript'}",
+      homeCode: "{$conf['home-code']}",
+      userIndex: "{$conf['user-index']}",
+      userNode: "{$conf['user-node']}"
+    }
+    $scope.updateConfig = function () {
+      $http.put('', $scope.config).then(function(res) {
+        res.data.ret && $mdDialog.show(
+          $mdDialog.alert()
+          .clickOutsideToClose(true)
+          .textContent('更新成功')
+          .ok('知道了')
+        )
+      })
+    }
+  })
 </script>
-
-{include file='admin/footer.tpl'}
+<div class="page-title" layout-padding>
+  <h2 class="md-headline">站点配置 <span class="md-subhead">App Config</span></h2>
+</div>
+<form ng-submit="updateConfig()" layout-padding>
+  <md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="信息管理">
+      <md-content layout="column">
+        <span flex style="height:32px"></span>
+        <md-input-container>
+          <label>网站名</label>
+          <input type="text" name="appName" ng-model="config.appName">
+        </md-input-container>
+        <md-input-container>
+          <label>统计代码</label>
+          <textarea name="analyticsCode" ng-model="config.analyticsCode" rows="1"></textarea>
+        </md-input-container>
+      </md-content>
+    </md-tab>
+    <md-tab label="公告管理">
+      <md-content layout="column">
+        <span flex style="height:32px"></span>
+        <md-input-container>
+          <label>邀请页公告</label>
+          <textarea name="homeCode" ng-model="config.homeCode" rows="1"></textarea>
+        </md-input-container>
+        <md-input-container>
+          <label>用户中心公告</label>
+          <textarea name="userIndex" ng-model="config.userIndex" rows="1"></textarea>
+        </md-input-container>
+        <md-input-container>
+          <label>用户节点公告</label>
+          <textarea name="userNode" ng-model="config.userNode" rows="1"></textarea>
+        </md-input-container>
+      </md-content>
+    </md-tab>
+  </md-tabs>
+  <div>
+    <md-button type="submit" class="md-raised md-primary">更新配置</md-button>
+  </div>
+</form>
+{/block}

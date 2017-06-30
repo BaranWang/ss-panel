@@ -21,7 +21,7 @@ class autoToll
                 $user->transfer_enable = $user->d + $user->u;
             }
             $user->save();
-            MoneyLog::add($user->id, 'deduct', -$money, date('Y-m-d').' 日租');
+            MoneyLog::add($user->id, 'deduct', '-'.$money, date('Y-m-d').' 日租');
         }
     }
 }

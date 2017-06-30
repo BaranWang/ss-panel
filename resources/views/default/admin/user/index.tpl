@@ -1,127 +1,57 @@
-{include file='admin/main.tpl'}
+{extends file='admin/layout.tpl'}
+{block name=main}
+<div class="page-title" layout-padding>
+  <h2 class="md-headline">用户列表 <span class="md-subhead">User List</span></h2>
+</div>
+<md-content layout-padding layout-margin>
+  <table class="md-table md-whiteframe-1dp" width="100%">
+    <tr>
+      <th>ID</th>
+      <th class="cell--non-numeric">邮箱</th>
+      <th>已用流量/总流量</th>
+      <th>最后在线时间</th>
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            用户列表
-            <small>User List</small>
-        </h1>
-    </section>
+      <th>注册时间</th>
+      <th>邀请者</th>
+      <th>操作</th>
+    </tr>
+    {foreach $users as $user}
+    <tr {if !$user->enable}style="background:#eee;color:#999"{/if}>
+      <td>#{$user->id}</td>
+      <td class="cell--non-numeric">
+        <span>
+          {$user->email}
+          <md-tooltip md-direction="bottom">{$user->user_name}</md-tooltip>
+        </span>
+      </td>
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="msg-success" class="alert alert-success alert-dismissable" style="display: none;">
-                    <button type="button" class="close" id="ok-close" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-info"></i> 成功!</h4>
-
-                    <p id="msg-success-p"></p>
-                </div>
-                <div id="msg-error" class="alert alert-warning alert-dismissable" style="display: none;">
-                    <button type="button" class="close" id="error-close" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-warning"></i> 出错了!</h4>
-
-                    <p id="msg-error-p"></p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box">
-                    <div class="box-body table-responsive no-padding">
-                        {$users->render()}
-                        <table class="table table-hover">
-                            <tr>
-                                <th>ID</th>
-                                <th>邮箱</th>
-                                <th>端口</th>
-                                <th>状态</th>
-                                <th>加密方式</th>
-                                <th>已用流量/总流量</th>
-                                <th>最后在线时间</th>
-                                <th>最后签到时间</th>
-                                <th>注册时间</th>
-                                <th>注册IP</th>
-                                <th>邀请者</th>
-                                <th>操作</th>
-                            </tr>
-                            {foreach $users as $user}
-                            <tr>
-                                <td>#{$user->id}</td>
-                                <td><abbr title="{$user->user_name}">{$user->email}</abbr></td>
-                                <td>{$user->port}</td>
-                                <td>{$user->enable}</td>
-                                <td>{$user->method}</td>
-                                <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>
-                                <td>{$user->lastSsTime()}</td>
-                                <td>{$user->lastCheckInTime()}</td>
-                                <th>{$user->reg_date}</th>
-                                <th>{$user->reg_ip}</th>
-                                <th>{$user->ref_by}</th>
-                                <td>
-                                    <a class="btn btn-info btn-sm" href="/admin/user/{$user->id}/edit">编辑</a>
-                                    <a class="btn btn-danger btn-sm" onclick="deleteUser({$user->id})">删除</a>
-                                </td>
-                            </tr>
-                            {/foreach}
-                        </table>
-                        {$users->render()}
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div>
-        </div>
-
-    </section><!-- /.content -->
-</div><!-- /.content-wrapper -->
-
-
-<script>
-    //$(document).ready(function () {
-        function deleteUser(userId){
-            if (!confirm("确定要删除用户 #"+userId+" 吗？")){
-                return;
-            }
-            $.ajax({
-                type:"DELETE",
-                url:"/admin/user/"+userId,
-                dataType:"json",
-                data:{
-                    id: userId
-                },
-                success:function(data){
-                    if(data.ret){
-                        $("#msg-error").hide(100);
-                        $("#msg-success").show(100);
-                        $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.href='/admin/user'", 2000);
-                    }else{
-                        $("#msg-error").hide(10);
-                        $("#msg-error").show(100);
-                        $("#msg-error-p").html(data.msg);
-                    }
-                },
-                error:function(jqXHR){
-                    $("#msg-error").hide(10);
-                    $("#msg-error").show(100);
-                    $("#msg-error-p").html("发生错误："+jqXHR.status);
-                }
-            });
-        }
-        $("html").keydown(function(event){
-            if(event.keyCode==13){
-                login();
-            }
-        });
-        $("#ok-close").click(function(){
-            $("#msg-success").hide(100);
-        });
-        $("#error-close").click(function(){
-            $("#msg-error").hide(100);
-        });
-    //})
-</script>
-
-{include file='admin/footer.tpl'}
+      <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>
+      <td>{$user->lastSsTime()}</td>
+      <td>{$user->reg_date}</td>
+      <td>{$user->ref_by}</td>
+      <td>
+        <md-menu md-position-mode="target-right target">
+          <md-button class="md-icon-button" ng-click="$mdMenu.open($event)">
+            <md-icon class="material-icons">&#xE5D4;</md-icon>
+          </md-button>
+          <md-menu-content width="4">
+            <md-menu-item>
+              <md-button href="/admin/user/{$user->id}/edit">
+                <md-icon class="material-icons">&#xE254;</md-icon>
+                编辑
+              </md-button>
+            </md-menu-item>
+            {* <md-menu-item>
+              <md-button ng-click="delete('{$node->name}',{$node->id})">
+                <md-icon class="material-icons">&#xE872;</md-icon>
+                删除
+              </md-button>
+            </md-menu-item> *}
+          </md-menu-content>
+        </md-menu>
+      </td>
+    </tr>
+    {/foreach}
+  </table>
+</md-content>
+{/block}
