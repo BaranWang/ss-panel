@@ -30,6 +30,8 @@
     });
     MyApp.controller('ViewController', function() {});
   </script>
+  {$analyticsCode}
+  {block name=ga}{/block}
 </head>
 
 <body layout="column" flex>
@@ -99,8 +101,6 @@
       </div>
     </md-content>
   </div>
-  {$analyticsCode}
-  {block name=ga}{/block}
 </body>
 
 </html>
