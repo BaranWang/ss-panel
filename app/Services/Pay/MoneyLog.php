@@ -27,7 +27,7 @@ class MoneyLog
         }
         return $result;
     }
-    public static function findByOrder($order)
+    public static function findByLog($order)
     {
         $result = MoneyLogModel::where('log', 'LIKE', '%'.$order.'%')->first();
         foreach ($result as $key => $value) {

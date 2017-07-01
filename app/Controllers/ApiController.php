@@ -143,20 +143,21 @@ class ApiController extends BaseController
         $callback = $_POST;
         unset($callback['seller_email'], $callback['open_id'], $callback['sign'], $callback['sign_type']);
         PayOrder::update($_POST['out_trade_no'], json_encode($callback));
-        if ($this->alipayTradeStatus($_POST)) {
-            if (MoneyLog::findByOrder($_POST['out_trade_no'])->id == null) {
-              $user = User::find(PayOrder::find($_POST['out_trade_no'])->user_id);
-              $user->transfer_enable = $user->transfer_enable + Tools::toGB($_POST['total_amount']);
-              $user->save();
-              MoneyLog::add($user->id, 'recharge', $_POST['total_amount'] ,"支付宝充值 {$_POST['out_trade_no']}");
-              if ($user->ref_by != 0) {
+        if ($this->alipayTradeStatus($_POST) && MoneyLog::findByLog($_POST['out_trade_no'])->id == null) {
+            $user = User::find(PayOrder::find($_POST['out_trade_no'])->user_id);
+            $user->transfer_enable = $user->transfer_enable + Tools::toGB($_POST['total_amount']);
+            $user->save();
+            MoneyLog::add($user->id, 'recharge', $_POST['total_amount'], "支付宝充值 {$_POST['out_trade_no']}");
+            if ($user->ref_by != 0) {
                 $inviter = User::find($user->ref_by);
                 $returnMoney = $_POST['total_amount'] * 0.1;
                 $inviter->transfer_enable = $inviter->transfer_enable + Tools::toGB($returnMoney);
                 $inviter->save();
-                MoneyLog::add($inviter->id, 'return', $returnMoney , $user->user_name.' 充值返利');
-              }
+                MoneyLog::add($inviter->id, 'return', $returnMoney, $user->user_name.' 充值返利');
             }
+            die('success');
+        } else {
+            die('fail');
         }
     }
     public function alipayStatus($request, $response, $args)
