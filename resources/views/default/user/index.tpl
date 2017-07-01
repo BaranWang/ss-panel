@@ -18,7 +18,7 @@
         <md-card-title-text class="md-headline">账户余额</md-card-title-text>
       </md-card-title>
       <md-card-content>
-        <p class="md-display-1" ng-bind="'{($user->transfer_enable - $user->d - $user->u) / 1024 / 1024 / 1024}'|currency:'¥'" style="margin-bottom:16px"></p>
+        <p class="md-display-1" ng-bind="'{$user->balance()}'|currency:'¥'" style="margin-bottom:16px"></p>
         <md-button class="md-raised md-primary" ng-href="/user/recharge">立即充值</md-button>
         <md-button class="md-primary" ng-href="/user/bill">账单明细</md-button>
       </md-card-content>
