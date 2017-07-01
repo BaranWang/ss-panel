@@ -13,7 +13,7 @@ class MoneyLog
         $moneyLog->user_id = $userId;
         $moneyLog->type = $type;
         $moneyLog->money = $money;
-        $moneyLog->log = json_encode($log);
+        $moneyLog->log = $log;
         if (!$moneyLog->save()) {
             return false;
         }
@@ -22,17 +22,11 @@ class MoneyLog
     public static function find($userId)
     {
         $result = MoneyLogModel::all()->where('user_id', $userId);
-        foreach ($result as $key => $value) {
-            $result[$key]['log'] = json_decode($value['log']);
-        }
         return $result;
     }
     public static function findByLog($order)
     {
         $result = MoneyLogModel::where('log', 'LIKE', '%'.$order.'%')->first();
-        foreach ($result as $key => $value) {
-            $result[$key]['log'] = json_decode($value['log']);
-        }
         return $result;
     }
 }
