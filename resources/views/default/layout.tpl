@@ -99,6 +99,7 @@
     </md-content>
   </div>
   {$analyticsCode}
+  {block name=ga}{/block}
 </body>
 
 </html>
