@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>{block name=title}{/block}{$config["appName"]}</title>
+  <link rel="shortcut icon" href="favicon.ico">
   <link rel="stylesheet" href="//cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">
   <link rel="stylesheet" href="//cdn.bootcss.com/angular-material/1.1.4/angular-material.min.css">
   <link rel="stylesheet" href="/assets/p-ss.men/css/style.css">
