@@ -1,5 +1,5 @@
-{include file='admin/main.tpl'}
-
+{extends file='admin/layout.tpl'}
+{block name=main}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -30,7 +30,7 @@
                         {foreach $users as $user}
                             <option value="{$user->id}" {if $user->id==$seleUser}selected="selected"{/if}>
                                 {$user->user_name}
-                            </option>  
+                            </option>
                         {/foreach}
                         </select>
                     </div>
@@ -41,7 +41,7 @@
                         {foreach $nodes as $node}
                             <option value="{$node->id}" {if $node->id==$seleNode}selected="selected"{/if}>
                                 {$node->name}
-                            </option>  
+                            </option>
                         {/foreach}
                         </select>
                     </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="box">
                     <div class="box-body table-responsive no-padding">
-                        {$logs->render()}
+                        {$logs}
                         <table class="table table-hover">
                             <tr>
                                 <th>ID</th>
@@ -72,7 +72,6 @@
                                 </tr>
                             {/foreach}
                         </table>
-                        {$logs->render()}
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>
@@ -88,4 +87,4 @@
     })
 </script>
 
-{include file='user/footer.tpl'}
+{/block}

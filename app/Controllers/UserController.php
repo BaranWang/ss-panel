@@ -34,9 +34,9 @@ class UserController extends BaseController
     public function index($request, $response, $args)
     {
         $msg = DbConfig::get('user-index');
-        if ($msg == null) {
-            $msg = "在后台修改用户中心公告...";
-        }
+        // if ($msg == null) {
+        //     $msg = "在后台修改用户中心公告...";
+        // }
         return $this->view()->assign('msg', $msg)->display('user/index.tpl');
     }
 

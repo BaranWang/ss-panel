@@ -29,7 +29,7 @@ class UserController extends AdminController
 
         }
         $method = Node::getCustomerMethod();
-        return $this->view()->assign('user', $user)->assign('method', $method)->display('admin/user/edit.tpl');
+        return $this->view()->assign('userinfo', $user)->assign('method', $method)->display('admin/user/edit.tpl');
     }
 
     public function update($request, $response, $args)
@@ -51,7 +51,7 @@ class UserController extends AdminController
         $user->method = $request->getParam('method');
         $user->enable = $request->getParam('enable');
         $user->is_admin = $request->getParam('is_admin');
-        $user->ref_by = $request->getParam('ref_by');
+        // $user->ref_by = $request->getParam('ref_by');
         if (!$user->save()) {
             $rs['ret'] = 0;
             $rs['msg'] = "修改失败";

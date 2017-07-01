@@ -1,7 +1,7 @@
 {extends file='user/layout.tpl'}
 {block name=main}
 <script>
-  MyApp.controller('ViewController', function($scope, $http,  $mdDialog) {
+  MyApp.controller('ViewController', function($scope, $http, $mdDialog) {
     $scope.updateFunction = function(url, data) {
       $http.post(url, data).then(function(res) {
         $mdDialog.show(

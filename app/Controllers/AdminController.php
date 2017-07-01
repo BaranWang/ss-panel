@@ -80,19 +80,20 @@ class AdminController extends UserController
                 $logs->where('node_id', $args['nid']);
             }
         }
-        $logs = $logs->paginate(15, ['*'], 'page', $pageNum);
+        // $logs = $logs->paginate(15, ['*'], 'page', $pageNum);
+        // $logs = json_encode($logs);
         $view = $this->view();
         if (!isset($args['nid'])) {
-            $logs->setPath('/admin/trafficlog');
+            // $logs->setPath('/admin/trafficlog');
             $view->assign('logs', $logs)->assign('seleUser', -1)->assign('seleNode', -1);
         } elseif (!isset($args['uid'])){
             $node = $args['nid'];
-            $logs->setPath("/admin/trafficlog/$node");
+            // $logs->setPath("/admin/trafficlog/$node");
             $view->assign('logs', $logs)->assign('seleUser', -1)->assign('seleNode', $node);
         } else {
             $node = $args['nid'];
             $user = $args['uid'];
-            $logs->setPath("/admin/trafficlog/$node/$user");
+            // $logs->setPath("/admin/trafficlog/$node/$user");
             $view->assign('logs', $logs)->assign('seleUser', $user)->assign('seleNode', $node);
         }
 
