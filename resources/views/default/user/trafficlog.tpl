@@ -2,8 +2,9 @@
 {block name=title}流量统计 - {/block}
 {block name=main}
 <script src="//a.alipayobjects.com/g/datavis/g2/2.3.5/g2.js"></script>
+
 <script>
-// @flow
+  var nodeList = { {foreach $nodes as $node}{$node->id}:'{$node->name}',{/foreach} };
   MyApp.controller('ViewController', function($scope, $http) {
     $scope.data = [];
     var chart = new G2.Chart({
@@ -12,15 +13,18 @@
       height: 480
     });
     chart.source($scope.data, {
-      'log_time': {
+      't': {
         type: 'time',
         alias: '时间',
         mask: 'mm/dd HH:MM:ss',
       },
-      'node': {
+      'n': {
         alias: '节点',
+        formatter: function(node) {
+          return nodeList[node]
+        }
       },
-      'traffic': {
+      'f': {
         alias: '流量',
         min: 0,
         formatter: function(bytes) {
@@ -34,10 +38,10 @@
         }
       }
     });
-    chart.axis('log_time', { title: null });
-    chart.axis('traffic', { title: null });
+    chart.axis('t', { title: null });
+    chart.axis('f', { title: null });
     // chart.legend({ position: 'bottom' });
-    chart.line().position('log_time*traffic').color('node').size(2);
+    chart.line().position('t*f').color('n').size(2);
     chart.render();
 
     $scope.day = 1;

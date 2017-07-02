@@ -235,7 +235,7 @@ class UserController extends BaseController
     }
     public function trafficLog($request, $response)
     {
-        return $this->view()->display('user/trafficlog.tpl');
+        return $this->view()->assign('nodes', Node::all())->display('user/trafficlog.tpl');
     }
     public function trafficLogJson($request, $response, $args)
     {
@@ -247,9 +247,9 @@ class UserController extends BaseController
             $traffic = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->get();
         }
         foreach ($traffic as $key => $value) {
-            $_traffic[$key]['log_time'] = $traffic[$key]['log_time'] * 1000;
-            $_traffic[$key]['traffic'] = ($traffic[$key]['d'] + $traffic[$key]['u']) * $traffic[$key]['rate'];
-            $_traffic[$key]['node'] = Node::find($traffic[$key]['node_id'])['name'];
+            $_traffic[$key]['t'] = $traffic[$key]['log_time'] * 1000;
+            $_traffic[$key]['f'] = ($traffic[$key]['d'] + $traffic[$key]['u']) * $traffic[$key]['rate'];
+            $_traffic[$key]['n'] = (string)$traffic[$key]['node_id'];
         }
         return json_encode($_traffic);
         exit;
