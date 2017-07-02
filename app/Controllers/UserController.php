@@ -247,11 +247,11 @@ class UserController extends BaseController
             $traffic = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->get();
         }
         foreach ($traffic as $key => $value) {
-            $traffic[$key]['log_time'] = $traffic[$key]['log_time'] * 1000;
-            $traffic[$key]['traffic'] = ($traffic[$key]['d'] + $traffic[$key]['u']) * $traffic[$key]['rate'];
-            $traffic[$key]['node'] = Node::find($traffic[$key]['node_id'])['name'];
+            $_traffic[$key]['log_time'] = $traffic[$key]['log_time'] * 1000;
+            $_traffic[$key]['traffic'] = ($traffic[$key]['d'] + $traffic[$key]['u']) * $traffic[$key]['rate'];
+            $_traffic[$key]['node'] = Node::find($traffic[$key]['node_id'])['name'];
         }
-        return json_encode($traffic);
+        return json_encode($_traffic);
         exit;
     }
     public function recharge($request, $response, $args)
