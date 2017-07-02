@@ -241,7 +241,7 @@ class UserController extends BaseController
     {
         $day = $request->getParam('day');
         if ($day) {
-            $dayTS = time() - ($day - 1) * 86400;
+            $dayTS = time() - $day * 86400;
             $traffic = TrafficLog::where('user_id', $this->user->id)->where('log_time', '>', $dayTS)->orderBy('id', 'desc')->get();
         } else {
             $traffic = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->get();
