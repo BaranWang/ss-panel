@@ -3,7 +3,10 @@
 <script>
   MyApp.controller('ViewController', function($scope, $window) {
     $scope.refunds = function() {
-      $window.location = 'mailto:admin@mail.p-ss.men?cc=me@baran.wang&subject=' + encodeURIComponent('{$config["appName"]} 用户 {$user.user_name} 申请提现') + '&body=' + encodeURIComponent('ID:{$user.id}\r\n注册邮箱：{$user.email}\r\n昵称：{$user.user_name}\r\n账户余额：{$user->balance()} 元\r\n提现金额：在此输入提现金额（单位为元）')
+      $window.open(
+        'mailto:admin@mail.p-ss.men?cc=me@baran.wang&subject=' + encodeURIComponent('{$config["appName"]} 用户 {$user.user_name} 申请提现') + '&body=' + encodeURIComponent('ID:{$user.id}\r\n注册邮箱：{$user.email}\r\n昵称：{$user.user_name}\r\n账户余额：{$user->balance()} 元\r\n提现金额：在此输入提现金额（单位为元）'),
+        '_blank'
+      )
     };
   });
 </script>
