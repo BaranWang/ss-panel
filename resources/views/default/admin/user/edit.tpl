@@ -5,7 +5,7 @@
     $scope.user = {$userinfo};
     $scope.user.user_name = '{$userinfo->user_name}';
     $scope.user.is_admin = '{$userinfo->is_admin}';
-    $scope.user.transfer_enable = {$user->enableTrafficInGB()};
+    $scope.user.transfer_enable = {$userinfo->enableTrafficInGB()};
     $scope.userFunction = function() {
       $http.put('/admin/user/{$user->id}', $scope.user).then(function(res) {
         $mdDialog.show(
@@ -55,7 +55,7 @@
           </md-input-container>
           <md-input-container>
             <label>已用流量</label>
-            <input type="text" value="{$user->usedTraffic()}" disabled>
+            <input type="text" value="{$userinfo->usedTraffic()}" disabled>
           </md-input-container>
         </md-card-content>
       </md-card>
@@ -95,7 +95,7 @@
           </md-input-container>
           <md-input-container>
             <label>邀请人 ID</label>
-            <input type="text" value="{$user->ref_by}" disabled>
+            <input type="text" value="{$userinfo->ref_by}" disabled>
           </md-input-container>
         </md-card-content>
       </md-card>
