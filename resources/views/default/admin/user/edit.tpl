@@ -51,7 +51,7 @@
         <md-card-content layout="column">
           <md-input-container>
             <label>总流量 (GB)</label>
-            <input type="number" step="0.01" name="transfer_enable" ng-model="user.transfer_enable">
+            <input type="number" step="0.001" name="transfer_enable" ng-model="user.transfer_enable">
           </md-input-container>
           <md-input-container>
             <label>已用流量</label>
