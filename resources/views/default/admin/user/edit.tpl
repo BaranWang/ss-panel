@@ -7,7 +7,7 @@
     $scope.user.is_admin = '{$userinfo->is_admin}';
     $scope.user.transfer_enable = {$userinfo->enableTrafficInGB()};
     $scope.userFunction = function() {
-      $http.put('/admin/user/{$user->id}', $scope.user).then(function(res) {
+      $http.put('/admin/user/{$userinfo->id}', $scope.user).then(function(res) {
         $mdDialog.show(
           $mdDialog.alert()
           .clickOutsideToClose(true)
@@ -19,7 +19,7 @@
   })
 </script>
 <div class="page-title" layout-padding>
-  <h2 class="md-headline">编辑用户 #{$user->id} <span class="md-subhead">Edit User #{$user->id}</span></h2>
+  <h2 class="md-headline">编辑用户 #{$userinfo->id} <span class="md-subhead">Edit User #{$userinfo->id}</span></h2>
 </div>
 <form ng-submit="userFunction()">
   <div layout-xs="column" layout="row">
