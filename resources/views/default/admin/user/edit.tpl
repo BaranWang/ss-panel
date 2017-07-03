@@ -4,7 +4,7 @@
   MyApp.controller('ViewController', function($scope, $http, $mdDialog) {
     $scope.user = {$userinfo};
     $scope.user.user_name = '{$userinfo->user_name}';
-    $scope.user.is_admin = {$userinfo->is_admin};
+    $scope.user.is_admin = '{$userinfo->is_admin}';
     $scope.user.transfer_enable = {$user->enableTrafficInGB()};
     $scope.userFunction = function() {
       $http.put('/admin/user/{$user->id}', $scope.user).then(function(res) {
@@ -41,7 +41,7 @@
             <label>密码</label>
             <input type="text" name="pass" ng-model="user.pass" placeholder="不修改时留空">
           </md-input-container>
-          <md-switch md-invert name="is_admin" ng-model="user.is_admin" ng-true-value="1" ng-false-value="0" style="margin-top:0">是否为管理员</md-switch>
+          <md-switch md-invert name="is_admin" ng-model="user.is_admin" ng-true-value="'1'" ng-false-value="'0'" style="margin-top:0">是否为管理员</md-switch>
         </md-card-content>
       </md-card>
       <md-card>

@@ -24,12 +24,12 @@ class UserController extends AdminController
     public function edit($request, $response, $args)
     {
         $id = $args['id'];
-        $user = User::find($id);
-        if ($user == null) {
+        $userinfo = User::find($id);
+        if ($userinfo == null) {
 
         }
         $method = Node::getCustomerMethod();
-        return $this->view()->assign('userinfo', $user)->assign('method', $method)->display('admin/user/edit.tpl');
+        return $this->view()->assign('userinfo', $userinfo)->assign('method', $method)->display('admin/user/edit.tpl');
     }
 
     public function update($request, $response, $args)
