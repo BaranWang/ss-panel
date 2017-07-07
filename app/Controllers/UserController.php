@@ -274,7 +274,7 @@ class UserController extends BaseController
             $_result[$key]['type'] = $value['type'];
             $_result[$key]['money'] = (float)$value['money'];
             $_result[$key]['log'] = $value['log'];
-            $_result[$key]['time'] = $value['time'];
+            $_result[$key]['time'] = strtotime($value['time']) * 1000;
         }
         $trafficLog = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->get();
         foreach ($trafficLog as $key => $value) {
@@ -282,7 +282,7 @@ class UserController extends BaseController
             $_trafficLog[$key]['type'] = 'deduct';
             $_trafficLog[$key]['money'] = -($value['d'] + $value['u']) / 1024 / 1024 / 1024;
             $_trafficLog[$key]['log'] = "使用流量 {$value['traffic']}";
-            $_trafficLog[$key]['time'] = gmdate('Y-m-d H:i:s', $value['log_time']);
+            $_trafficLog[$key]['time'] = $value['log_time'] * 1000;
         }
         $logs = array_merge($_result, $_trafficLog);
         if ($type) {

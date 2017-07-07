@@ -75,7 +75,7 @@ MyApp.directive("whenScrolled", function() {
       </thead>
       <tbody ng-repeat="d in data">
         <tr ng-repeat="item in d">
-          <td class="cell--non-numeric" ng-bind="item.time"></td>
+          <td class="cell--non-numeric" ng-bind="item.time | date:'yyyy-MM-dd HH:mm:ss'"></td>
           <td ng-switch="item.type">
             <span ng-switch-when="recharge">充值</span>
             <span ng-switch-when="deduct">扣费</span>
