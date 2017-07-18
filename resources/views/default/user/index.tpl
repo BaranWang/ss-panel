@@ -47,7 +47,7 @@
           <br>
           <md-icon class="material-icons">&#xE325;</md-icon>
           iOS 用户推荐使用
-          <md-button class="md-primary" target="_blank" href="https://itunes.apple.com/app/id1162704202">Potatso</md-button>
+          <md-button class="md-primary" target="_blank" href="https://itunes.apple.com/app/id1239860606">Potatso Lite</md-button>
           <br>
           <md-icon class="material-icons">&#xE324;</md-icon>
           Android 用户下载
